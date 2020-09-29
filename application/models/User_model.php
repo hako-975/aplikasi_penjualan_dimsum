@@ -10,6 +10,13 @@ class User_model extends CI_Model
 		$this->load->model('Log_model', 'lm');
 	}
 
+	public function getAllUser()
+	{
+		$this->db->order_by('jabatan', 'asc');
+		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_user.id_outlet');
+		return $this->db->get('tb_user')->result_array();
+	}
+
 	public function getUserById($id)
 	{
 		return $this->db->get_where('tb_user', ['id_user' => $id])->row_array();

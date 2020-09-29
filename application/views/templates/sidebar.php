@@ -7,8 +7,23 @@
 
     <ul class="list-unstyled components">
       <li>
-        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-fw fa-align-left"></i> Management Data</a>
-        <ul class="collapse list-unstyled" id="homeSubmenu">
+        <a href="<?= base_url('main'); ?>"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
+      </li>
+      <li>
+        <a href="<?= base_url('transaksi'); ?>"><i class="fas fa-fw fa-handshake"></i> Transaksi</a>
+      </li>
+      <li>
+        <?php 
+          $className = explode('/', $_SERVER['REQUEST_URI']);
+          $className = end($className);
+        ?>
+        <?php if ($className == 'outlet' || $className == 'user' || $className == 'menu'): ?>
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle"><i class="fas fa-fw fa-align-left"></i> Management Data</a>
+          <ul class="collapse list-unstyled show" id="homeSubmenu">
+        <?php else: ?>
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-fw fa-align-left"></i> Management Data</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+        <?php endif ?>
           <li>
             <a href="<?= base_url('main/outlet'); ?>"><i class="fas fa-fw fa-store"></i> Outlet</a>
           </li>
@@ -29,7 +44,7 @@
     </ul>
 
     <ul class="list-unstyled">
-        <p>Copyright 9999 &copy; By Andri. All Right Reserved.</p>
+        <p>Copyright 2020 &copy; By Andri Firman Saputra. All Right Reserved.</p>
       </li>
     </ul>
   </nav>

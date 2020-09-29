@@ -10,6 +10,11 @@ class Outlet_model extends CI_Model
 		$this->load->model('Log_model', 'lm');
 	}
 
+	public function getAllOutlet()
+	{
+		return $this->db->get('tb_outlet')->result_array();
+	}
+	
 	public function getOutletById($id)
 	{
 		return $this->db->get_where('tb_outlet', ['id_outlet' => $id])->row_array();

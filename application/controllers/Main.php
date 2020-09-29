@@ -29,7 +29,7 @@ class Main extends CI_Controller
 	{
 		$this->mm->check_login();
 		$data['dataUser'] = $this->mm->dataUser();
-		$data['outlet'] = $this->db->get('tb_outlet')->result_array();
+		$data['outlet'] = $this->om->getAllOutlet();
 		$data['title'] = "Halaman Outlet";
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
@@ -58,10 +58,8 @@ class Main extends CI_Controller
 	{
 		$this->mm->check_login();
 		$data['dataUser'] = $this->mm->dataUser();
-		$this->db->order_by('jabatan', 'asc');
-		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_user.id_outlet');
-		$data['user'] = $this->db->get('tb_user')->result_array();
-		$data['outlet'] = $this->db->get('tb_outlet')->result_array();
+		$data['user'] = $this->um->getAllUser();
+		$data['outlet'] = $this->om->getAllOutlet();
 		$data['title'] = "Halaman User";
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
@@ -90,9 +88,8 @@ class Main extends CI_Controller
 	{
 		$this->mm->check_login();
 		$data['dataUser'] = $this->mm->dataUser();
-		$this->db->join('tb_outlet', 'tb_menu.id_outlet=tb_outlet.id_outlet');
-		$data['menu'] = $this->db->get_where('tb_menu', ['tb_menu.id_outlet' => $data['dataUser']['id_outlet']])->result_array();
-		$data['outlet'] = $this->db->get('tb_outlet')->result_array();
+		$data['menu'] = $this->memo->getAllMenuByOutletUserLogin();
+		$data['outlet'] = $this->om->getAllOutlet();
 		$data['title'] = "Halaman Menu";
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
