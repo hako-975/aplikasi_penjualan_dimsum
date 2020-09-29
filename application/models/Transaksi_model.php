@@ -15,6 +15,7 @@ class Transaksi_model extends CI_Model
 		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_transaksi.id_outlet', 'left');
 		$this->db->join('tb_user', 'tb_user.id_user=tb_transaksi.id_user', 'left');
 		$this->db->order_by('id_transaksi', 'desc');
+		$this->db->group_by('kode_invoice');
 		return $this->db->get_where('tb_transaksi', ['tb_transaksi.id_outlet' => $id_outlet])->result_array();
 	}
 
@@ -32,18 +33,24 @@ class Transaksi_model extends CI_Model
 		// ambil kolom terakhir pada table
 		$query = "SELECT max($field) AS field FROM tb_transaksi INNER JOIN tb_outlet ON tb_transaksi.id_outlet = tb_outlet.id_outlet";
 		$last_id_transaksi = $this->db->query($query)->row_array();
-		$data_transaksi = $this->getTransaksiById($last_id_transaksi['field']);
-		// ambil tanggal
-		$just_date = date('dmY', $tgl_transaksi);
-		// ambil tanggal terakhir pada db
-		$last_row_date = substr($data_transaksi['kode_invoice'], 0, 8);
-		// jika tanggal tidak sama dengan tanggal sebelumnya, maka atur angka dari 000 kembali
-		if ($just_date == $last_row_date) {
-			$field = $data_transaksi['kode_invoice'];
+		if ($last_id_transaksi) {
+			$data_transaksi = $this->getTransaksiById($last_id_transaksi['field']);
+			// ambil tanggal
+			$just_date = date('dmY', $tgl_transaksi);
+			// ambil tanggal terakhir pada db
+			$last_row_date = substr($data_transaksi['kode_invoice'], 0, 8);
+			// jika tanggal tidak sama dengan tanggal sebelumnya, maka atur angka dari 000 kembali
+			if ($just_date == $last_row_date) {
+				$field = $data_transaksi['kode_invoice'];
+			} else {
+				// ambil bagian depan kode invoice sbg tanggal
+				$field = $just_date . $id_outlet . $id_user  . 'T' . '0000';
+			}
 		} else {
 			// ambil bagian depan kode invoice sbg tanggal
 			$field = $just_date . $id_outlet . $id_user  . 'T' . '0000';
 		}
+
 		// ambil id terakhir dari depan
 		$substr = substr($field, -4);
 		// Conversi menjadi int
@@ -62,18 +69,25 @@ class Transaksi_model extends CI_Model
 		$id_user = $this->mm->dataUser()['id_user'];
 		$id_outlet = $this->mm->dataUser()['id_outlet'];
 		$kode_invoice = $this->kodeInvoice($tanggal_transaksi, $id_outlet, $id_user, 'id_transaksi', 'T');
+    	$kuantitas = $this->input->post('kuantitas', true);
+    	$id_menu = $this->input->post('id_menu', true);
+    	$data = [];
 
-		$data = [
-			'kode_invoice' => $kode_invoice,
-			'kuantitas' => $this->input->post('kuantitas', true),
-			'status_bayar' => 'belum_dibayar',
-			'tgl_transaksi' => $tanggal_transaksi,
-			'id_menu' => $this->input->post('id_menu', true),
-			'id_user' => $id_user,
-			'id_outlet' => $id_outlet
-		];
+	    $index = 0;
+	    foreach($kuantitas as $k) {
+			array_push($data, [
+				'kode_invoice' => $kode_invoice,
+				'kuantitas' => $kuantitas[$index],
+				'status_bayar' => 'belum_dibayar',
+				'tgl_transaksi' => $tanggal_transaksi,
+				'id_menu' => $id_menu[$index],
+				'id_user' => $id_user,
+				'id_outlet' => $id_outlet
+			]);
+	    	$index++;
+		}
 
-		$this->db->insert('tb_transaksi', $data);
+		$this->db->insert_batch('tb_transaksi', $data);
 		$this->session->set_flashdata('message-success', 'Transaksi baru dengan kode invoice ' . $data['kode_invoice'] . ' berhasil ditambahkan');
 		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $data['kode_invoice'] . '</b> berhasil ditambahkan', $this->mm->dataUser()['id_user']);
 		redirect('transaksi');
