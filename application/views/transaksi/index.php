@@ -1,7 +1,19 @@
 <style>
 	hr {
-		background-color: black;
+		background-color: #aaa;
 	}	
+
+	.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+	  background-color: #fefefe;
+	}
+
+	.table > tbody > tr:hover > td, .table > tbody > tr:hover > td > .pesanan > hr {
+	    border-top: 1px solid #aaa;
+	    border-left: 1px solid #aaa;
+	    border-right: 1px solid #aaa;
+	    border-bottom: 1px solid #aaa;
+	}
+
 </style>
 
 <div class="container">
@@ -64,7 +76,7 @@
 						<th>No</th>
 						<th>Kode Invoice</th>
 						<th style="min-width: 12rem">Pesanan</th>
-						<th>Status Bayar</th>
+						<th style="min-width: 6rem">Status Bayar</th>
 						<th>Tanggal Transaksi</th>
 						<th>Dilakukan Oleh</th>
 						<th>Aksi</th>
@@ -76,7 +88,7 @@
 						<tr>
 							<td><?= $i++; ?></td>
 							<td><?= $dt['kode_invoice']; ?></td>
-							<td>
+							<td class="py-0 my-0">
 								<?php 
 									$kode_invoice = $dt['kode_invoice'];
 									$query = "SELECT * FROM tb_transaksi 
@@ -87,15 +99,22 @@
 									";
 									$execute = $this->db->query($query)->result_array();
 								?>
-								<div class="row px-2 text-left">
+								<div class="row pesanan py-0 mx-0 my-0 px-2 text-left">
 									<?php foreach ($execute as $pesanan): ?>
+									  	<hr style="margin: 5px 0; background: #eaeaea; width: 100%">
 									  	<div class="col-2 text-center bg-info text-white rounded"><?= $pesanan['kuantitas']; ?></div>
 									  	<div class="col-10 text-left"><?= $pesanan['nama_menu']; ?></div>
-									  	<hr style="background: #eaeaea; width: 100%">
 									<?php endforeach ?>
+								  	<hr style="margin: 5px 0; background: #eaeaea; width: 100%">
 								</div>
 							</td>
-							<td><?= $dt['status_bayar']; ?></td>
+							<td>
+								<?php if ($dt['status_bayar'] == 'belum_dibayar'): ?>
+									<a href="" class="badge badge-danger"><i class="fas fa-fw fa-times"></i> Belum Dibayar</a>
+								<?php else: ?>
+									<a href="" class="badge badge-success"><i class="fas fa-fw fa-check"></i> Sudah Dibayar</a>
+								<?php endif ?>
+							</td>
 							<td><?= date('d-m-Y, H:i:s', $dt['tgl_transaksi']); ?></td>
 							<td><?= $dt['nama_user']; ?></td>
 							<td>
