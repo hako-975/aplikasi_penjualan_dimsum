@@ -30,8 +30,8 @@ $('.btn-delete').on('click', function(e){
 	  text: "Menghapus data " + name,
 	  icon: 'warning',
 	  showCancelButton: true,
-	  cancelButtonColor: '#3085d6',
-	  confirmButtonColor: '#d33',
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
 	  cancelButtonText: 'Batal',
 	  confirmButtonText: 'Hapus Data!'
 	}).then((result) => {

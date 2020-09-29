@@ -81,6 +81,9 @@ class Transaksi_model extends CI_Model
 
 	public function editTransaksi($id_transaksi)
 	{
+		$data = $this->getTransaksiById($id_transaksi);
+		$kode_invoice = $data['kode_invoice'];
+
 		$id_user = $this->mm->dataUser()['id_user'];
 		$id_outlet = $this->mm->dataUser()['id_outlet'];
 
@@ -93,8 +96,8 @@ class Transaksi_model extends CI_Model
 		];
 
 		$this->db->update('tb_transaksi', $data, ['tb_transaksi.id_transaksi' => $id_transaksi]);
-		$this->session->set_flashdata('message-success', 'Transaksi dengan kode invoice ' . $data['kode_invoice'] . ' berhasil diubah');
-		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $data['kode_invoice'] . '</b> berhasil diubah', $this->mm->dataUser()['id_user']);
+		$this->session->set_flashdata('message-success', 'Transaksi dengan kode invoice ' . $kode_invoice . ' berhasil diubah');
+		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $kode_invoice . '</b> berhasil diubah', $this->mm->dataUser()['id_user']);
 		redirect('transaksi');
 	}
 

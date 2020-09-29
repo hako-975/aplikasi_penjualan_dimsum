@@ -60,7 +60,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p class="text-dark">Apakah <?= $dataUser['nama_user']; ?> ingin keluar dari aplikasi?</p>
+          <p class="text-dark">Apakah <strong><?= $dataUser['nama_user']; ?></strong> ingin keluar dari aplikasi?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Batal</button>
