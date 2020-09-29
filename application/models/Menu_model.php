@@ -14,6 +14,7 @@ class Menu_model extends CI_Model
 	{
 		$dataUser = $this->mm->dataUser();
 		$this->db->join('tb_outlet', 'tb_menu.id_outlet=tb_outlet.id_outlet');
+		$this->db->order_by('tb_menu.harga_menu', 'asc');
 		return $this->db->get_where('tb_menu', ['tb_menu.id_outlet' => $dataUser['id_outlet']])->result_array();
 	}
 

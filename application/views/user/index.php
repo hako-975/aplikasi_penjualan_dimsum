@@ -1,11 +1,11 @@
 <div class="container">
 	<div class="row my-2">
-		<div class="col-lg header-title">
+		<div class="col-lg my-2 py-2 header-title">
 			<h3><i class="fas fa-fw fa-user"></i> Daftar User</h3>
 		</div>
 
 		<?php if ($dataUser['jabatan'] == 'administrator'): ?>
-			<div class="col-lg header-button">
+			<div class="col-lg my-2 py-2 header-button">
 				<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
 				<!-- Modal -->
 				<div class="modal fade" id="tambahUserModal" tabindex="-1" aria-labelledby="tambahUserModalLabel" aria-hidden="true">

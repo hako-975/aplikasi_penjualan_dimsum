@@ -1,19 +1,19 @@
 <div class="container">
 	<div class="row my-2">
-		<div class="col-lg header-title">
+		<div class="col-lg my-2 py-2 header-title">
 			<h3><i class="fas fa-fw fa-utensils"></i> Daftar Menu</h3>
 		</div>
 
 		<?php if ($dataUser['jabatan'] == 'administrator'): ?>
-			<div class="col-lg header-button">
-				<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
+			<div class="col-lg my-2 py-2 header-button">
+				<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahMenuModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
 				<!-- Modal -->
-				<div class="modal fade" id="tambahUserModal" tabindex="-1" aria-labelledby="tambahUserModalLabel" aria-hidden="true">
+				<div class="modal fade" id="tambahMenuModal" tabindex="-1" aria-labelledby="tambahMenuModalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <form action="<?= base_url('main/addMenu'); ?>" method="post">
 				    	<div class="modal-content text-left">
 					      <div class="modal-header">
-					        <h5 class="modal-title" id="tambahUserModalLabel"><i class="fas fa-fw fa-utensils"></i><sup><i class="fas fa-1x fa-plus"></i></sup> Tambah Menu</h5>
+					        <h5 class="modal-title" id="tambahMenuModalLabel"><i class="fas fa-fw fa-utensils"></i><sup><i class="fas fa-1x fa-plus"></i></sup> Tambah Menu</h5>
 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					          <span aria-hidden="true">&times;</span>
 					        </button>
@@ -61,14 +61,14 @@
 								<td class="text-left">Rp. <?= number_format($dm['harga_menu']); ?></td>
 								<td class="text-left"><?= $dm['nama_outlet']; ?></td>
 								<td>
-									<a class="btn m-1 btn-info" href="" data-toggle="modal" data-target="#ubahUserModal<?= $dm['id_menu']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
+									<a class="btn m-1 btn-info" href="" data-toggle="modal" data-target="#ubahMenuModal<?= $dm['id_menu']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
 									<!-- Modal -->
-									<div class="modal fade" id="ubahUserModal<?= $dm['id_menu']; ?>" tabindex="-1" aria-labelledby="ubahUserModalLabel<?= $dm['id_menu']; ?>" aria-hidden="true">
+									<div class="modal fade" id="ubahMenuModal<?= $dm['id_menu']; ?>" tabindex="-1" aria-labelledby="ubahMenuModalLabel<?= $dm['id_menu']; ?>" aria-hidden="true">
 									  <div class="modal-dialog">
 									    <form action="<?= base_url('main/editMenu/' . $dm['id_menu']); ?>" method="post">
 									    	<div class="modal-content text-left">
 										      <div class="modal-header">
-										        <h5 class="modal-title" id="ubahUserModalLabel<?= $dm['id_menu']; ?>"><i class="fas fa-fw fa-utensils"></i><sup><i class="fas fa-1x fa-edit"></i></sup> Ubah Menu</h5>
+										        <h5 class="modal-title" id="ubahMenuModalLabel<?= $dm['id_menu']; ?>"><i class="fas fa-fw fa-utensils"></i><sup><i class="fas fa-1x fa-edit"></i></sup> Ubah Menu</h5>
 										        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										          <span aria-hidden="true">&times;</span>
 										        </button>

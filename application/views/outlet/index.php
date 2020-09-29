@@ -1,19 +1,19 @@
 <div class="container">
 	<div class="row my-2">
-		<div class="col-lg header-title">
+		<div class="col-lg my-2 py-2 header-title">
 			<h3><i class="fas fa-fw fa-store"></i> Daftar Outlet</h3>
 		</div>
 
 		<?php if ($dataUser['jabatan'] == 'administrator'): ?>
-			<div class="col-lg header-button">
-				<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
+			<div class="col-lg my-2 py-2 header-button">
+				<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahOutletModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
 				<!-- Modal -->
-				<div class="modal fade" id="tambahUserModal" tabindex="-1" aria-labelledby="tambahUserModalLabel" aria-hidden="true">
+				<div class="modal fade" id="tambahOutletModal" tabindex="-1" aria-labelledby="tambahOutletModalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <form action="<?= base_url('main/addOutlet'); ?>" method="post">
 				    	<div class="modal-content text-left">
 					      <div class="modal-header">
-					        <h5 class="modal-title" id="tambahUserModalLabel"><i class="fas fa-fw fa-store"></i><sup><i class="fas fa-1x fa-plus"></i></sup> Tambah Outlet</h5>
+					        <h5 class="modal-title" id="tambahOutletModalLabel"><i class="fas fa-fw fa-store"></i><sup><i class="fas fa-1x fa-plus"></i></sup> Tambah Outlet</h5>
 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					          <span aria-hidden="true">&times;</span>
 					        </button>
@@ -77,14 +77,14 @@
 								<td class="text-left"><?= $do['no_telepon_outlet']; ?></td>
 								<td class="text-left"><?= $do['alamat_outlet']; ?></td>
 								<td>
-									<a class="btn m-1 btn-info" href="" data-toggle="modal" data-target="#ubahUserModal<?= $do['id_outlet']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
+									<a class="btn m-1 btn-info" href="" data-toggle="modal" data-target="#ubahOutletModal<?= $do['id_outlet']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
 									<!-- Modal -->
-									<div class="modal fade" id="ubahUserModal<?= $do['id_outlet']; ?>" tabindex="-1" aria-labelledby="ubahUserModalLabel<?= $do['id_outlet']; ?>" aria-hidden="true">
+									<div class="modal fade" id="ubahOutletModal<?= $do['id_outlet']; ?>" tabindex="-1" aria-labelledby="ubahOutletModalLabel<?= $do['id_outlet']; ?>" aria-hidden="true">
 									  <div class="modal-dialog">
 									    <form action="<?= base_url('main/editOutlet/' . $do['id_outlet']); ?>" method="post">
 									    	<div class="modal-content text-left">
 										      <div class="modal-header">
-										        <h5 class="modal-title" id="ubahUserModalLabel<?= $do['id_outlet']; ?>"><i class="fas fa-fw fa-store"></i><sup><i class="fas fa-1x fa-edit"></i></sup> Ubah Outlet</h5>
+										        <h5 class="modal-title" id="ubahOutletModalLabel<?= $do['id_outlet']; ?>"><i class="fas fa-fw fa-store"></i><sup><i class="fas fa-1x fa-edit"></i></sup> Ubah Outlet</h5>
 										        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										          <span aria-hidden="true">&times;</span>
 										        </button>
