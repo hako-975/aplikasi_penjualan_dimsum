@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row my-2">
 		<div class="col-lg header-title">
-			<h3><i class="fas fa-fw fa-user"></i> Daftar Outlet</h3>
+			<h3><i class="fas fa-fw fa-store"></i> Daftar Outlet</h3>
 		</div>
 
 		<?php if ($dataUser['jabatan'] == 'administrator'): ?>

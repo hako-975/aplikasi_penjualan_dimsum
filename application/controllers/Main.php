@@ -9,6 +9,7 @@ class Main extends CI_Controller
 		$this->load->model('Main_model', 'mm');
 		$this->load->model('User_model', 'um');
 		$this->load->model('Outlet_model', 'om');
+		$this->load->model('Menu_model', 'memo');
 	}
 
 	public function index()
@@ -82,6 +83,35 @@ class Main extends CI_Controller
 	public function deleteUser($id)
 	{
 		$this->um->deleteUser($id);
+	}
+
+	// menu
+	public function menu()
+	{
+		$this->mm->check_login();
+		$data['dataUser'] = $this->mm->dataUser();
+		$data['menu'] = $this->db->get('tb_menu')->result_array();
+		$data['title'] = "Halaman Menu";
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('menu/index', $data);
+		$this->load->view('templates/tutup_sidebar', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	public function addMenu()
+	{
+		$this->memo->addMenu();
+	}
+
+	public function editMenu($id)
+	{
+		$this->memo->editMenu($id);
+	}
+
+	public function deleteMenu($id)
+	{
+		$this->memo->deleteMenu($id);
 	}
 }
 
