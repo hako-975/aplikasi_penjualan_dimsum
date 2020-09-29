@@ -13,15 +13,15 @@
             <a href="<?= base_url('main/user'); ?>"><i class="fas fa-fw fa-user"></i> User</a>
           </li>
           <li>
-            <a href="#">Home 2</a>
+            <a href="#">Menu</a>
           </li>
           <li>
-            <a href="#">Home 3</a>
+            <a href="#">Outlet</a>
           </li>
         </ul>
       </li>
       <li>
-        <a href="#">Portfolio</a>
+        <a href="<?= base_url('log'); ?>"><i class="fas fa-fw fa-file-signature"></i> Log</a>
       </li>
       <li>
         <a href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-fw fa-sign-out-alt"></i> Logout</a>

@@ -21,19 +21,19 @@
 					      <div class="modal-body">
 					      	<div class="form-group">
 					      		<label for="nama_user">Nama User</label>
-					      		<input type="text" id="nama_user" class="form-control" name="nama_user" required>
+					      		<input type="text" id="nama_user" class="form-control" placeholder="Masukkan Nama" name="nama_user" required>
 					      	</div>
 					      	<div class="form-group">
 					      		<label for="username">Username</label>
-					      		<input type="text" id="username" class="form-control" name="username" required>
+					      		<input type="text" id="username" class="form-control" placeholder="Masukkan Username"  name="username" required>
 					      	</div>
 					      	<div class="form-group">
 					      		<label for="password">Password</label>
-					      		<input type="password" id="password" class="form-control" name="password" required minlength="5">
+					      		<input type="password" id="password" class="form-control" placeholder="Masukkan Password" name="password" required minlength="5">
 					      	</div>
 					      	<div class="form-group">
 					      		<label for="password_verifikasi">Verifikasi Password</label>
-					      		<input type="password" id="password_verifikasi" class="form-control" name="password_verifikasi" required minlength="5">
+					      		<input type="password" id="password_verifikasi" class="form-control" placeholder="Masukkan Password Ulang"  name="password_verifikasi" required minlength="5">
 					      	</div>
 					      	<div class="form-group">
 					      		<label for="jabatan">Jabatan</label>
@@ -77,7 +77,52 @@
 								<td><?= $du['jabatan']; ?></td>
 								<td>
 									<?php if ($dataUser['jabatan'] == 'administrator' || $dataUser['id_user'] == $du['id_user']): ?>
-										<a class="btn btn-success" href="" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-fw fa-edit"></i> Ubah</a>
+										<a class="btn btn-success" href="" data-toggle="modal" data-target="#ubahUserModal<?= $du['id_user']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
+										<!-- Modal -->
+										<div class="modal fade" id="ubahUserModal<?= $du['id_user']; ?>" tabindex="-1" aria-labelledby="ubahUserModalLabel<?= $du['id_user']; ?>" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <form action="<?= base_url('main/editUser/' . $du['id_user']); ?>" method="post">
+										    	<div class="modal-content text-left">
+											      <div class="modal-header">
+											        <h5 class="modal-title" id="ubahUserModalLabel<?= $du['id_user']; ?>"><i class="fas fa-fw fa-user-edit"></i> Ubah User</h5>
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+											      </div>
+											      <div class="modal-body">
+											      	<div class="form-group">
+											      		<label for="username<?= $du['id_user']; ?>">Username</label>
+											      		<input style="cursor: not-allowed;" disabled type="text" id="username<?= $du['id_user']; ?>" class="form-control" name="username" value="<?= $du['username']; ?>" required>
+											      	</div>
+											      	<div class="form-group">
+											      		<label for="nama_user<?= $du['id_user']; ?>">Nama User</label>
+											      		<input type="text" id="nama_user<?= $du['id_user']; ?>" class="form-control" name="nama_user" value="<?= $du['nama_user']; ?>" required>
+											      	</div>
+											      	<div class="form-group">
+											      		<label for="jabatan">Jabatan</label>
+											      		<select name="jabatan" id="jabatan" class="form-control">
+											      			<?php if ($dataUser['jabatan'] == 'administrator'): ?>
+											      				<?php if ($du['jabatan'] == 'administrator'): ?>
+											      					<option value="administrator">Administrator</option>
+													      			<option value="kasir">Kasir</option>
+											      					<?php else: ?>
+													      			<option value="kasir">Kasir</option>
+											      					<option value="administrator">Administrator</option>
+											      				<?php endif ?>
+											      			<?php else: ?>
+												      			<option value="kasir">Kasir</option>
+											      			<?php endif ?>
+											      		</select>
+											      	</div>
+											      </div>
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Batal</button>
+											        <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
+											      </div>
+											    </div>
+										    </form>
+										  </div>
+										</div>
 										<?php if ($du['jabatan'] != 'administrator'): ?>
 											<?php if ($dataUser['jabatan'] == 'administrator'): ?>
 												<a class="btn btn-danger btn-delete" data-name="<?= $du['nama_user']; ?>" href="<?= base_url('main/deleteUser/' . $du['id_user']); ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>

@@ -41,6 +41,11 @@ class Main extends CI_Controller
 		$this->um->addUser();
 	}
 
+	public function editUser($id)
+	{
+		$this->um->editUser($id);
+	}
+
 	public function deleteUser($id)
 	{
 		$this->um->deleteUser($id);

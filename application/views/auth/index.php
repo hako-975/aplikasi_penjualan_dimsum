@@ -10,11 +10,11 @@
 			<form action="<?= base_url('auth/login'); ?>" method="post">
 				<div class="form-group">
 					<label for="username"><i class="fas fa-fw fa-user"></i> Username</label>
-					<input type="text" id="username" class="form-control rounded-pill" name="username" required>
+					<input type="text" id="username" class="form-control rounded-pill" placeholder="Masukkan Username" name="username" required>
 				</div>
 				<div class="form-group">
 					<label for="password"><i class="fas fa-fw fa-lock"></i> Password</label>
-					<input type="password" id="password" class="form-control rounded-pill" name="password" required>
+					<input type="password" id="password" class="form-control rounded-pill" placeholder="Masukkan Password" name="password" required>
 				</div>
 				<div class="form-group text-right">
 					<button type="submit" class="btn btn-success rounded-pill px-4">Login</button>
