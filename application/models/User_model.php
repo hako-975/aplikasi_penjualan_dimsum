@@ -15,8 +15,21 @@ class User_model extends CI_Model
 		return $this->db->get_where('tb_user', ['id_user' => $id])->row_array();
 	}
 
+	public function checkJabatan($reason)
+	{
+		$dataUser = $this->mm->dataUser();
+		if ($dataUser['jabatan'] != 'administrator') {
+			$this->session->set_flashdata('message-failed', 'Anda tidak memiliki hak akses ini, silahkan hubungi administrator!');
+			$this->lm->addLog('User dengan nama user <b>' . $dataUser['nama_user'] . '</b> mencoba <b>' . $reason . '</b>', $this->mm->dataUser()['id_user']);
+			redirect('main/user');
+			return false;
+		}
+	}
+
 	public function addUser()
 	{
+		$this->checkJabatan('menambahkan user');
+
 		$username = $this->input->post('username', true);
 		$password = $this->input->post('password', true);
 		$password_verifikasi = $this->input->post('password_verifikasi', true);
@@ -36,41 +49,47 @@ class User_model extends CI_Model
 		$password = password_hash($password, PASSWORD_DEFAULT);
 
 		$data = [
-			'nama_user' => $this->input->post('nama_user', true),
+			'nama_user' => ucwords(strtolower($this->input->post('nama_user', true))),
 			'username' => $username,
 			'password' => $password,
-			'jabatan' => $this->input->post('jabatan', true)
+			'jabatan' => $this->input->post('jabatan', true),
+			'id_outlet' => $this->input->post('id_outlet', true)
 		];
 
 		$this->db->insert('tb_user', $data);
 		$this->session->set_flashdata('message-success', 'User baru dengan nama user ' . $data['nama_user'] . ' berhasil ditambahkan');
-		$this->lm->addLog('User baru dengan nama user ' . $data['nama_user'] . ' berhasil ditambahkan', $this->mm->dataUser()['id_user']);
+		$this->lm->addLog('User baru dengan nama user <b>' . $data['nama_user'] . '</b> berhasil ditambahkan', $this->mm->dataUser()['id_user']);
 		redirect('main/user');
 	}	
 
-	public function editUser($id)
+	public function editUser($id_user)
 	{
+
 		$data = $this->getUserById($id_user);
-		$username = $data['nama_user'];
+		$nama_user = $data['nama_user'];
+
+		$this->checkJabatan('mengubah user ' . $nama_user);
 
 		$data = [
-			'nama_user' => $this->input->post('nama_user', true),
-			'jabatan' => $this->input->post('jabatan', true)
+			'nama_user' => ucwords(strtolower($this->input->post('nama_user', true))),
+			'jabatan' => $this->input->post('jabatan', true),
+			'id_outlet' => $this->input->post('id_outlet', true)
 		];
 
-		$this->db->update('tb_user', $data, ['id_user' => $id]);
-		$this->session->set_flashdata('message-success', 'User dengan nama user ' . $username . ' berhasil diubah menjadi ' . $data['nama_user']);
-		$this->lm->addLog('User dengan nama user ' . $username . ' berhasil diubah menjadi ' . $data['nama_user'], $this->mm->dataUser()['id_user']);
+		$this->db->update('tb_user', $data, ['id_user' => $id_user]);
+		$this->session->set_flashdata('message-success', 'User dengan nama user ' . $nama_user . ' berhasil diubah menjadi ' . $data['nama_user']);
+		$this->lm->addLog('User dengan nama user <b>' . $nama_user . '</b> berhasil diubah menjadi <b>' . $data['nama_user'] . '</b>', $this->mm->dataUser()['id_user']);
 		redirect('main/user');
 	}	
 
 	public function deleteUser($id_user)
 	{
 		$data = $this->getUserById($id_user);
-		$username = $data['nama_user'];
+		$nama_user = $data['nama_user'];
+		$this->checkJabatan('menghapus user ' . $nama_user);
 		$this->db->delete('tb_user', ['id_user' => $id_user]);
-		$this->session->set_flashdata('message-success', 'User dengan nama user ' . $username . ' berhasil dihapus');
-		$this->lm->addLog('User dengan nama user ' . $username . ' berhasil dihapus', $this->mm->dataUser()['id_user']);
+		$this->session->set_flashdata('message-success', 'User dengan nama user ' . $nama_user . ' berhasil dihapus');
+		$this->lm->addLog('User dengan nama user <b>' . $nama_user . '</b> berhasil dihapus', $this->mm->dataUser()['id_user']);
 		redirect('main/user');
 	}
 }

@@ -8,6 +8,7 @@ class Main extends CI_Controller
 		parent::__construct();
 		$this->load->model('Main_model', 'mm');
 		$this->load->model('User_model', 'um');
+		$this->load->model('Outlet_model', 'om');
 	}
 
 	public function index()
@@ -22,12 +23,44 @@ class Main extends CI_Controller
 		$this->load->view('templates/footer', $data);
 	}
 
+	// Outlet
+	public function outlet()
+	{
+		$this->mm->check_login();
+		$data['dataUser'] = $this->mm->dataUser();
+		$data['outlet'] = $this->db->get('tb_outlet')->result_array();
+		$data['title'] = "Halaman Outlet";
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('outlet/index', $data);
+		$this->load->view('templates/tutup_sidebar', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	public function addOutlet()
+	{
+		$this->om->addOutlet();
+	}
+
+	public function editOutlet($id)
+	{
+		$this->om->editOutlet($id);
+	}
+
+	public function deleteOutlet($id)
+	{
+		$this->om->deleteOutlet($id);
+	}
+
 	// User
 	public function user()
 	{
 		$this->mm->check_login();
 		$data['dataUser'] = $this->mm->dataUser();
+		$this->db->order_by('jabatan', 'asc');
+		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_user.id_outlet');
 		$data['user'] = $this->db->get('tb_user')->result_array();
+		$data['outlet'] = $this->db->get('tb_outlet')->result_array();
 		$data['title'] = "Halaman User";
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);

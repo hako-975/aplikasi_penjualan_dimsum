@@ -1,12 +1,12 @@
 <div class="container">
 	<div class="row my-2">
 		<div class="col-lg header-title">
-			<h3>Daftar User</h3>
+			<h3><i class="fas fa-fw fa-user"></i> Daftar User</h3>
 		</div>
 
 		<?php if ($dataUser['jabatan'] == 'administrator'): ?>
 			<div class="col-lg header-button">
-				<a href="" class="btn merah-baru" data-toggle="modal" data-target="#tambahUserModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
+				<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
 				<!-- Modal -->
 				<div class="modal fade" id="tambahUserModal" tabindex="-1" aria-labelledby="tambahUserModalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
@@ -42,10 +42,21 @@
 					      			<option value="kasir">Kasir</option>
 					      		</select>
 					      	</div>
+					      	<div class="form-group">
+					      		<label for="id_outlet">Nama Outlet</label>
+					      		<select name="id_outlet" id="id_outlet" class="form-control">
+				      				<option value="<?= $dataUser['id_outlet']; ?>"><?= $dataUser['nama_outlet']; ?></option>
+					      			<?php foreach ($outlet as $do): ?>
+					      				<?php if ($dataUser['id_outlet'] !== $do['id_outlet']): ?>
+						      				<option value="<?= $do['id_outlet']; ?>"><?= $do['nama_outlet']; ?></option>
+					      				<?php endif ?>
+					      			<?php endforeach ?>
+					      		</select>
+					      	</div>
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Batal</button>
-					        <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan</button>
+					        <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-save"></i> Simpan</button>
 					      </div>
 					    </div>
 				    </form>
@@ -61,6 +72,7 @@
 					<thead>
 						<tr>
 							<th>No.</th>
+							<th>Nama Outlet</th>
 							<th>Nama User</th>
 							<th>Username</th>
 							<th>Jabatan</th>
@@ -72,12 +84,13 @@
 						<?php foreach ($user as $du): ?>
 							<tr>
 								<td><?= $i++; ?></td>
+								<td><?= $du['nama_outlet']; ?></td>
 								<td><?= $du['nama_user']; ?></td>
 								<td><?= $du['username']; ?></td>
 								<td><?= $du['jabatan']; ?></td>
 								<td>
 									<?php if ($dataUser['jabatan'] == 'administrator' || $dataUser['id_user'] == $du['id_user']): ?>
-										<a class="btn btn-success" href="" data-toggle="modal" data-target="#ubahUserModal<?= $du['id_user']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
+										<a class="btn m-1 btn-info" href="" data-toggle="modal" data-target="#ubahUserModal<?= $du['id_user']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
 										<!-- Modal -->
 										<div class="modal fade" id="ubahUserModal<?= $du['id_user']; ?>" tabindex="-1" aria-labelledby="ubahUserModalLabel<?= $du['id_user']; ?>" aria-hidden="true">
 										  <div class="modal-dialog">
@@ -99,8 +112,8 @@
 											      		<input type="text" id="nama_user<?= $du['id_user']; ?>" class="form-control" name="nama_user" value="<?= $du['nama_user']; ?>" required>
 											      	</div>
 											      	<div class="form-group">
-											      		<label for="jabatan">Jabatan</label>
-											      		<select name="jabatan" id="jabatan" class="form-control">
+											      		<label for="jabatan<?= $du['id_user']; ?>">Jabatan</label>
+											      		<select name="jabatan" id="jabatan<?= $du['id_user']; ?>" class="form-control">
 											      			<?php if ($dataUser['jabatan'] == 'administrator'): ?>
 											      				<?php if ($du['jabatan'] == 'administrator'): ?>
 											      					<option value="administrator">Administrator</option>
@@ -114,6 +127,17 @@
 											      			<?php endif ?>
 											      		</select>
 											      	</div>
+											      	<div class="form-group">
+											      		<label for="id_outlet<?= $du['id_user']; ?>">Nama Outlet</label>
+											      		<select name="id_outlet" id="id_outlet<?= $du['id_user']; ?>" class="form-control">
+										      				<option value="<?= $dataUser['id_outlet']; ?>"><?= $dataUser['nama_outlet']; ?></option>
+											      			<?php foreach ($outlet as $do): ?>
+											      				<?php if ($dataUser['id_outlet'] !== $do['id_outlet']): ?>
+												      				<option value="<?= $do['id_outlet']; ?>"><?= $do['nama_outlet']; ?></option>
+											      				<?php endif ?>
+											      			<?php endforeach ?>
+											      		</select>
+											      	</div>
 											      </div>
 											      <div class="modal-footer">
 											        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Batal</button>
@@ -125,7 +149,7 @@
 										</div>
 										<?php if ($du['jabatan'] != 'administrator'): ?>
 											<?php if ($dataUser['jabatan'] == 'administrator'): ?>
-												<a class="btn btn-danger btn-delete" data-name="<?= $du['nama_user']; ?>" href="<?= base_url('main/deleteUser/' . $du['id_user']); ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+												<a class="btn m-1 btn-danger btn-delete" data-name="<?= $du['nama_user']; ?>" href="<?= base_url('main/deleteUser/' . $du['id_user']); ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
 											<?php endif ?>
 										<?php endif ?>
 									<?php endif ?>

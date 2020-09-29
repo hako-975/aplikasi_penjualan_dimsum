@@ -2,7 +2,7 @@
   <!-- Sidebar  -->
   <nav id="sidebar">
     <div class="sidebar-header">
-        <h3>Bootstrap Sidebar</h3>
+      <img src="<?= base_url('assets/img/img_properties/logo.png'); ?>" alt="logo" class="img-fluid">
     </div>
 
     <ul class="list-unstyled components">
@@ -10,13 +10,13 @@
         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-fw fa-align-left"></i> Management Data</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
           <li>
+            <a href="<?= base_url('main/outlet'); ?>"><i class="fas fa-fw fa-store"></i> Outlet</a>
+          </li>
+          <li>
             <a href="<?= base_url('main/user'); ?>"><i class="fas fa-fw fa-user"></i> User</a>
           </li>
           <li>
-            <a href="#">Menu</a>
-          </li>
-          <li>
-            <a href="#">Outlet</a>
+            <a href="<?= base_url('main/menu'); ?>"><i class="fas fa-fw fa-utensils"></i> Menu</a>
           </li>
         </ul>
       </li>
