@@ -28,4 +28,14 @@ class Transaksi extends CI_Controller {
 	{
 		$this->tm->addTransaksi();
 	}
+
+	public function editTransaksi($id)
+	{
+		$this->tm->editTransaksi($id);
+	}
+
+	public function deleteTransaksi($id)
+	{
+		$this->tm->deleteTransaksi($id);
+	}
 }

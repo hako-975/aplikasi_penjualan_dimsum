@@ -52,7 +52,7 @@ class Transaksi_model extends CI_Model
 		$inc = $conv + 1;
 		
 		// membuat kode otomatis cth: 009, 010, 011 dan hasil akhir
-		$result_code = $just_date . str_pad($id_outlet, 2, "0", STR_PAD_LEFT) . str_pad($id_user, 2, "0", STR_PAD_LEFT)  . $initial . str_pad($inc, 4, "0", STR_PAD_LEFT);
+		$result_code = $just_date . str_pad($id_outlet, 3, "0", STR_PAD_LEFT) . str_pad($id_user, 3, "0", STR_PAD_LEFT)  . $initial . str_pad($inc, 4, "0", STR_PAD_LEFT);
 		return $result_code;
 	}
 
@@ -76,6 +76,35 @@ class Transaksi_model extends CI_Model
 		$this->db->insert('tb_transaksi', $data);
 		$this->session->set_flashdata('message-success', 'Transaksi baru dengan kode invoice ' . $data['kode_invoice'] . ' berhasil ditambahkan');
 		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $data['kode_invoice'] . '</b> berhasil ditambahkan', $this->mm->dataUser()['id_user']);
+		redirect('transaksi');
+	}
+
+	public function editTransaksi($id_transaksi)
+	{
+		$id_user = $this->mm->dataUser()['id_user'];
+		$id_outlet = $this->mm->dataUser()['id_outlet'];
+
+		$data = [
+			'kuantitas' => $this->input->post('kuantitas', true),
+			'status_bayar' => 'belum_dibayar',
+			'id_menu' => $this->input->post('id_menu', true),
+			'id_user' => $id_user,
+			'id_outlet' => $id_outlet
+		];
+
+		$this->db->update('tb_transaksi', $data, ['tb_transaksi.id_transaksi' => $id_transaksi]);
+		$this->session->set_flashdata('message-success', 'Transaksi dengan kode invoice ' . $data['kode_invoice'] . ' berhasil diubah');
+		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $data['kode_invoice'] . '</b> berhasil diubah', $this->mm->dataUser()['id_user']);
+		redirect('transaksi');
+	}
+
+	public function deleteTransaksi($id_transaksi)
+	{
+		$data = $this->getTransaksiById($id_transaksi);
+		$kode_invoice = $data['kode_invoice'];
+		$this->db->delete('tb_transaksi', ['id_transaksi' => $id_transaksi]);
+		$this->session->set_flashdata('message-success', 'Transaksi dengan kode invoice ' . $kode_invoice . ' berhasil dihapus');
+		$this->lm->addLog('Transaksi dengan kode invoice <b>' . $kode_invoice . '</b> berhasil dihapus', $this->mm->dataUser()['id_user']);
 		redirect('transaksi');
 	}
 }
