@@ -90,7 +90,9 @@ class Main extends CI_Controller
 	{
 		$this->mm->check_login();
 		$data['dataUser'] = $this->mm->dataUser();
-		$data['menu'] = $this->db->get('tb_menu')->result_array();
+		$this->db->join('tb_outlet', 'tb_menu.id_outlet=tb_outlet.id_outlet');
+		$data['menu'] = $this->db->get_where('tb_menu', ['tb_menu.id_outlet' => $data['dataUser']['id_outlet']])->result_array();
+		$data['outlet'] = $this->db->get('tb_outlet')->result_array();
 		$data['title'] = "Halaman Menu";
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);

@@ -48,37 +48,39 @@
 							<th>No.</th>
 							<th>Nama Menu</th>
 							<th>Harga Menu</th>
+							<th>Pada Outlet</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
 					<tbdody>
 						<?php $i = 1; ?>
-						<?php foreach ($menu as $do): ?>
+						<?php foreach ($menu as $dm): ?>
 							<tr>
 								<td><?= $i++; ?></td>
-								<td class="text-left"><?= $do['nama_menu']; ?></td>
-								<td class="text-left">Rp. <?= number_format($do['harga_menu']); ?></td>
+								<td class="text-left"><?= $dm['nama_menu']; ?></td>
+								<td class="text-left">Rp. <?= number_format($dm['harga_menu']); ?></td>
+								<td class="text-left"><?= $dm['nama_outlet']; ?></td>
 								<td>
-									<a class="btn m-1 btn-info" href="" data-toggle="modal" data-target="#ubahUserModal<?= $do['id_menu']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
+									<a class="btn m-1 btn-info" href="" data-toggle="modal" data-target="#ubahUserModal<?= $dm['id_menu']; ?>"><i class="fas fa-fw fa-edit"></i> Ubah</a>
 									<!-- Modal -->
-									<div class="modal fade" id="ubahUserModal<?= $do['id_menu']; ?>" tabindex="-1" aria-labelledby="ubahUserModalLabel<?= $do['id_menu']; ?>" aria-hidden="true">
+									<div class="modal fade" id="ubahUserModal<?= $dm['id_menu']; ?>" tabindex="-1" aria-labelledby="ubahUserModalLabel<?= $dm['id_menu']; ?>" aria-hidden="true">
 									  <div class="modal-dialog">
-									    <form action="<?= base_url('main/editMenu/' . $do['id_menu']); ?>" method="post">
+									    <form action="<?= base_url('main/editMenu/' . $dm['id_menu']); ?>" method="post">
 									    	<div class="modal-content text-left">
 										      <div class="modal-header">
-										        <h5 class="modal-title" id="ubahUserModalLabel<?= $do['id_menu']; ?>"><i class="fas fa-fw fa-utensils"></i><sup><i class="fas fa-1x fa-edit"></i></sup> Ubah Menu</h5>
+										        <h5 class="modal-title" id="ubahUserModalLabel<?= $dm['id_menu']; ?>"><i class="fas fa-fw fa-utensils"></i><sup><i class="fas fa-1x fa-edit"></i></sup> Ubah Menu</h5>
 										        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										          <span aria-hidden="true">&times;</span>
 										        </button>
 										      </div>
 										      <div class="modal-body">
 										      	<div class="form-group">
-										      		<label for="nama_menu<?= $do['id_menu']; ?>">Nama Menu</label>
-										      		<input type="text" id="nama_menu<?= $do['id_menu']; ?>" class="form-control" name="nama_menu" value="<?= $do['nama_menu']; ?>" required>
+										      		<label for="nama_menu<?= $dm['id_menu']; ?>">Nama Menu</label>
+										      		<input type="text" id="nama_menu<?= $dm['id_menu']; ?>" class="form-control" name="nama_menu" value="<?= $dm['nama_menu']; ?>" required>
 										      	</div>
 										      	<div class="form-group">
-										      		<label for="harga_menu<?= $do['id_menu']; ?>">Harga Menu</label>
-										      		<input type="number" id="harga_menu<?= $do['id_menu']; ?>" class="form-control" placeholder="Masukkan Harga Menu" name="harga_menu" value="<?= $do['harga_menu']; ?>" required>
+										      		<label for="harga_menu<?= $dm['id_menu']; ?>">Harga Menu</label>
+										      		<input type="number" id="harga_menu<?= $dm['id_menu']; ?>" class="form-control" placeholder="Masukkan Harga Menu" name="harga_menu" value="<?= $dm['harga_menu']; ?>" required>
 										      	</div>
 										      </div>
 										      <div class="modal-footer">
@@ -90,7 +92,7 @@
 									  </div>
 									</div>
 									<?php if ($dataUser['jabatan'] == 'administrator'): ?>
-										<a class="btn m-1 btn-danger btn-delete" data-name="<?= $do['nama_menu']; ?>" href="<?= base_url('main/deleteMenu/' . $do['id_menu']); ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+										<a class="btn m-1 btn-danger btn-delete" data-name="<?= $dm['nama_menu']; ?>" href="<?= base_url('main/deleteMenu/' . $dm['id_menu']); ?>"><i class="fas fa-fw fa-trash"></i> Hapus</a>
 									<?php endif ?>
 								</td>
 							</tr>
