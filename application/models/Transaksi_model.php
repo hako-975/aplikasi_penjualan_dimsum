@@ -104,64 +104,31 @@ class Transaksi_model extends CI_Model
 
 	public function editTransaksi($kode_invoice)
 	{
+		$tanggal_transaksi = time();
 		$id_user = $this->mm->dataUser()['id_user'];
 		$id_outlet = $this->mm->dataUser()['id_outlet'];
-    	$id_menu = $this->input->post('id_menu', true);
     	$kuantitas = $this->input->post('kuantitas', true);
-    	$id_transaksi = $this->input->post('id_transaksi', true);
-    	$arrayKodeInvoice = $this->getTransaksiByKodeInvoice($kode_invoice);
+    	$id_menu = $this->input->post('id_menu', true);
+    	$data = [];
+    	
+    	$kode_invoice_baru = $kode_invoice; 
+    	$this->db->delete('tb_transaksi', ['kode_invoice' => $kode_invoice]);
 
-    	if ($id_transaksi != null) {
-    		$updateData = [];
-		    $index = 0;
-		    foreach($id_transaksi as $idt) {
-				$updateData[] =  [
-					'id_transaksi' => $id_transaksi[$index],
-					'kuantitas' => $kuantitas[$index],
-					'id_menu' => $id_menu[$index],
-					'id_user' => $id_user,
-					'id_outlet' => $id_outlet
-				];
-			}
-
+	    $index = 0;
+	    foreach($kuantitas as $k) {
+			array_push($data, [
+				'kode_invoice' => $kode_invoice_baru,
+				'kuantitas' => $kuantitas[$index],
+				'status_bayar' => 'belum_dibayar',
+				'tgl_transaksi' => $tanggal_transaksi,
+				'id_menu' => $id_menu[$index],
+				'id_user' => $id_user,
+				'id_outlet' => $id_outlet
+			]);
 	    	$index++;
-			$this->db->update_batch('tb_transaksi', $updateData, 'id_transaksi');
-
-			$i = 0;
-			foreach ($arrayKodeInvoice as $aki) {
-				error_reporting(0);
-	    		if ($aki['id_transaksi'] && $id_transaksi[$i] == null) {
-				error_reporting(0);
-					$exec = $this->db->delete('tb_transaksi', ['id_transaksi' => $aki['id_transaksi']]);
-	    		}
-	    		$i++;
-			}
-    	} else {
-			$exec = $this->db->delete('tb_transaksi', ['kode_invoice' => $kode_invoice]);
-    	}
-
-		$kuantitas_baru = $this->input->post('kuantitas_baru', true);
-		if ($kuantitas_baru != null) {
-			$id_menu_baru = $this->input->post('id_menu_baru', true);
-	    	$tanggal_transaksi = time();
-			$newData = [];
-
-		    $index2 = 0;
-		    foreach($kuantitas_baru as $k) {
-				array_push($newData, [
-					'kode_invoice' => $kode_invoice,
-					'kuantitas' => $kuantitas_baru[$index2],
-					'status_bayar' => 'belum_dibayar',
-					'tgl_transaksi' => $tanggal_transaksi,
-					'id_menu' => $id_menu_baru[$index2],
-					'id_user' => $id_user,
-					'id_outlet' => $id_outlet
-				]);
-		    	$index2++;
-			}
-
-			$this->db->insert_batch('tb_transaksi', $newData);
 		}
+
+		$this->db->insert_batch('tb_transaksi', $data);
 
 		$this->session->set_flashdata('message-success', 'Transaksi dengan kode invoice ' . $kode_invoice . ' berhasil diubah');
 		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $kode_invoice . '</b> berhasil diubah', $this->mm->dataUser()['id_user']);

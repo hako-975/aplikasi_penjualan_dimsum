@@ -93,7 +93,7 @@
 
         <ul class="nav navbar-nav ml-auto my-2">
           <li class="nav-item active">
-            <a href="" class="btn merah-baru"><i class="fas fa-fw fa-user"></i> <?= $dataUser['nama_user']; ?></a>
+            <a href="<?= base_url('main/profile'); ?>" class="btn merah-baru"><i class="fas fa-fw fa-user"></i> <?= $dataUser['nama_user']; ?></a>
           </li>
         </ul>
       </div>

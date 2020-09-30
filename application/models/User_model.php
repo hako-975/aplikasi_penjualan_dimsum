@@ -99,4 +99,32 @@ class User_model extends CI_Model
 		$this->lm->addLog('User dengan nama user <b>' . $nama_user . '</b> berhasil dihapus', $this->mm->dataUser()['id_user']);
 		redirect('main/user');
 	}
+
+	public function gantiPassword()
+	{
+		$password_lama = $this->input->post('password_lama', true);
+		$password_baru = $this->input->post('password_baru', true);
+		$verifikasi_password_baru = $this->input->post('verifikasi_password_baru', true);
+
+		// check old password
+		if (password_verify($password_lama, $this->mm->dataUser()['password'])) {
+			// check verification password
+			if ($password_baru == $verifikasi_password_baru) {
+				$password_baru_hash = password_hash($password_baru, PASSWORD_DEFAULT);
+				$this->db->update('tb_user', ['password' => $password_baru_hash]);
+				$this->session->set_flashdata('message-success', 'User dengan nama user ' . $this->mm->dataUser()['nama_user'] . ' berhasil mengubah password');
+				$this->lm->addLog('User dengan nama user <b>' . $this->mm->dataUser()['nama_user'] . '</b> berhasil mengubah password', $this->mm->dataUser()['id_user']);
+				redirect('main/profile');
+			} else {
+				$this->session->set_flashdata('message-failed', 'User dengan nama user ' . $this->mm->dataUser()['nama_user'] . ' gagal mengubah password, password baru tidak sesuai dengan verifikasi password baru');
+				$this->lm->addLog('User dengan nama user <b>' . $this->mm->dataUser()['nama_user'] . '</b> gagal mengubah password, password baru tidak sesuai dengan verifikasi password baru', $this->mm->dataUser()['id_user']);
+				redirect('main/profile');
+			}
+		} else {
+			$this->session->set_flashdata('message-failed', 'User dengan nama user ' . $this->mm->dataUser()['nama_user'] . ' gagal mengubah password, password lama tidak sesuai');
+			$this->lm->addLog('User dengan nama user <b>' . $this->mm->dataUser()['nama_user'] . '</b>  gagal mengubah password, password lama tidak sesuai', $this->mm->dataUser()['id_user']);
+			redirect('main/profile');
+		}
+
+	}
 }

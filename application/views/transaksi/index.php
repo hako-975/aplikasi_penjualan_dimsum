@@ -111,7 +111,7 @@
 							</td>
 							<td>
 								<?php if ($dt['status_bayar'] == 'belum_dibayar'): ?>
-									<a href="" class="badge badge-danger"><i class="fas fa-fw fa-times"></i> Belum Dibayar</a>
+									<a href="<?= base_url('pembayaran/' . $kode_invoice); ?>" class="badge badge-danger"><i class="fas fa-fw fa-times"></i> Belum Dibayar</a>
 								<?php else: ?>
 									<a href="" class="badge badge-success"><i class="fas fa-fw fa-check"></i> Sudah Dibayar</a>
 								<?php endif ?>
@@ -145,7 +145,6 @@
 												<div id="record2">
 												<?php foreach ($execute as $ex): ?>
 											      	<div class="row">
-														<input type="hidden" name="id_transaksi[]" value="<?= $ex['id_transaksi']; ?>">
 											      		<div class="col-lg-4">
 											      			<div class="form-group">
 													      		<label for="kuantitas[]<?= $dt['id_transaksi']; ?>">Kuantitas</label>
@@ -233,14 +232,14 @@
 		<div class="row">
 			<div class="col-lg-4">
 				<div class="form-group">
-	      		<label for="kuantitas_baru[]">Kuantitas</label>
-	      		<input type="number" min="1" id="kuantitas_baru[]" class="form-control" placeholder="Masukkan Kuantitas" name="kuantitas_baru[]" required>
+	      		<label for="kuantitas[]">Kuantitas</label>
+	      		<input type="number" min="1" id="kuantitas[]" class="form-control" placeholder="Masukkan Kuantitas" name="kuantitas[]" required>
 	      	</div>
 			</div>
 			<div class="col-lg-8">
 				<div class="form-group">
-	      		<label for="id_menu_baru[]">Nama Menu</label>
-	      		<select name="id_menu_baru[]" id="id_menu_baru[]" class="form-control">
+	      		<label for="id_menu[]">Nama Menu</label>
+	      		<select name="id_menu[]" id="id_menu[]" class="form-control">
 	      			<?php foreach ($menu as $dm): ?>
 		      			<option value="<?= $dm['id_menu']; ?>"><?= $dm['nama_menu']; ?> | Rp. <?= ucwords($dm['harga_menu']); ?></option>
 	      			<?php endforeach ?>
