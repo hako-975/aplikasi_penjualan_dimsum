@@ -9,14 +9,23 @@ class Transaksi_model extends CI_Model
 		$this->load->model('Main_model', 'mm');
 	}
 
-	public function getTransaksiByIdOutlet($id_outlet)
+	public function getTransaksiByIdOutletGroupByKodeInvoice($id_outlet)
 	{
 		$this->db->join('tb_menu', 'tb_menu.id_menu=tb_transaksi.id_menu', 'left');
 		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_transaksi.id_outlet', 'left');
 		$this->db->join('tb_user', 'tb_user.id_user=tb_transaksi.id_user', 'left');
-		$this->db->order_by('id_transaksi', 'desc');
+		$this->db->order_by('id_transaksi', 'desc'); // jangan diubah
 		$this->db->group_by('kode_invoice');
 		return $this->db->get_where('tb_transaksi', ['tb_transaksi.id_outlet' => $id_outlet])->result_array();
+	}
+
+	private function getTransaksiByKodeInvoice($kode_invoice)
+	{
+		$this->db->join('tb_menu', 'tb_menu.id_menu=tb_transaksi.id_menu', 'left');
+		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_transaksi.id_outlet', 'left');
+		$this->db->join('tb_user', 'tb_user.id_user=tb_transaksi.id_user', 'left');
+		$this->db->order_by('id_transaksi', 'desc'); // jangan diubah
+		return $this->db->get_where('tb_transaksi', ['tb_transaksi.kode_invoice' => $kode_invoice])->result_array();
 	}
 
 	public function getTransaksiById($id)
@@ -93,33 +102,75 @@ class Transaksi_model extends CI_Model
 		redirect('transaksi');
 	}
 
-	public function editTransaksi($id_transaksi)
+	public function editTransaksi($kode_invoice)
 	{
-		$data = $this->getTransaksiById($id_transaksi);
-		$kode_invoice = $data['kode_invoice'];
-
 		$id_user = $this->mm->dataUser()['id_user'];
 		$id_outlet = $this->mm->dataUser()['id_outlet'];
+    	$id_menu = $this->input->post('id_menu', true);
+    	$kuantitas = $this->input->post('kuantitas', true);
+    	$id_transaksi = $this->input->post('id_transaksi', true);
+    	$arrayKodeInvoice = $this->getTransaksiByKodeInvoice($kode_invoice);
 
-		$data = [
-			'kuantitas' => $this->input->post('kuantitas', true),
-			'status_bayar' => 'belum_dibayar',
-			'id_menu' => $this->input->post('id_menu', true),
-			'id_user' => $id_user,
-			'id_outlet' => $id_outlet
-		];
+    	if ($id_transaksi != null) {
+    		$updateData = [];
+		    $index = 0;
+		    foreach($id_transaksi as $idt) {
+				$updateData[] =  [
+					'id_transaksi' => $id_transaksi[$index],
+					'kuantitas' => $kuantitas[$index],
+					'id_menu' => $id_menu[$index],
+					'id_user' => $id_user,
+					'id_outlet' => $id_outlet
+				];
+			}
 
-		$this->db->update('tb_transaksi', $data, ['tb_transaksi.id_transaksi' => $id_transaksi]);
+	    	$index++;
+			$this->db->update_batch('tb_transaksi', $updateData, 'id_transaksi');
+
+			$i = 0;
+			foreach ($arrayKodeInvoice as $aki) {
+				error_reporting(0);
+	    		if ($aki['id_transaksi'] && $id_transaksi[$i] == null) {
+				error_reporting(0);
+					$exec = $this->db->delete('tb_transaksi', ['id_transaksi' => $aki['id_transaksi']]);
+	    		}
+	    		$i++;
+			}
+    	} else {
+			$exec = $this->db->delete('tb_transaksi', ['kode_invoice' => $kode_invoice]);
+    	}
+
+		$kuantitas_baru = $this->input->post('kuantitas_baru', true);
+		if ($kuantitas_baru != null) {
+			$id_menu_baru = $this->input->post('id_menu_baru', true);
+	    	$tanggal_transaksi = time();
+			$newData = [];
+
+		    $index2 = 0;
+		    foreach($kuantitas_baru as $k) {
+				array_push($newData, [
+					'kode_invoice' => $kode_invoice,
+					'kuantitas' => $kuantitas_baru[$index2],
+					'status_bayar' => 'belum_dibayar',
+					'tgl_transaksi' => $tanggal_transaksi,
+					'id_menu' => $id_menu_baru[$index2],
+					'id_user' => $id_user,
+					'id_outlet' => $id_outlet
+				]);
+		    	$index2++;
+			}
+
+			$this->db->insert_batch('tb_transaksi', $newData);
+		}
+
 		$this->session->set_flashdata('message-success', 'Transaksi dengan kode invoice ' . $kode_invoice . ' berhasil diubah');
 		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $kode_invoice . '</b> berhasil diubah', $this->mm->dataUser()['id_user']);
 		redirect('transaksi');
 	}
 
-	public function deleteTransaksi($id_transaksi)
+	public function deleteTransaksi($kode_invoice)
 	{
-		$data = $this->getTransaksiById($id_transaksi);
-		$kode_invoice = $data['kode_invoice'];
-		$this->db->delete('tb_transaksi', ['id_transaksi' => $id_transaksi]);
+		$this->db->delete('tb_transaksi', ['kode_invoice' => $kode_invoice]);
 		$this->session->set_flashdata('message-success', 'Transaksi dengan kode invoice ' . $kode_invoice . ' berhasil dihapus');
 		$this->lm->addLog('Transaksi dengan kode invoice <b>' . $kode_invoice . '</b> berhasil dihapus', $this->mm->dataUser()['id_user']);
 		redirect('transaksi');

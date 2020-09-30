@@ -14,7 +14,7 @@ class Transaksi extends CI_Controller {
 	{
 		$this->mm->check_login();
 		$data['dataUser'] = $this->mm->dataUser();
-		$data['transaksi'] = $this->tm->getTransaksiByIdOutlet($data['dataUser']['id_outlet']);
+		$data['transaksi'] = $this->tm->getTransaksiByIdOutletGroupByKodeInvoice($data['dataUser']['id_outlet']);
 		$data['menu'] = $this->memo->getAllMenuByOutletUserLogin();
 		$data['title'] = "Halaman Transaksi";
 		$this->load->view('templates/header', $data);
@@ -29,13 +29,13 @@ class Transaksi extends CI_Controller {
 		$this->tm->addTransaksi();
 	}
 
-	public function editTransaksi($id)
+	public function editTransaksi($kode_invoice)
 	{
-		$this->tm->editTransaksi($id);
+		$this->tm->editTransaksi($kode_invoice);
 	}
 
-	public function deleteTransaksi($id)
+	public function deleteTransaksi($kode_invoice)
 	{
-		$this->tm->deleteTransaksi($id);
+		$this->tm->deleteTransaksi($kode_invoice);
 	}
 }

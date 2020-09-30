@@ -4,19 +4,27 @@
     <div class="sidebar-header">
       <img src="<?= base_url('assets/img/img_properties/logo.png'); ?>" alt="logo" class="img-fluid">
     </div>
-
-    <ul class="list-unstyled components">
-      <li>
-        <a href="<?= base_url('main'); ?>"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
-      </li>
-      <li>
-        <a href="<?= base_url('transaksi'); ?>"><i class="fas fa-fw fa-handshake"></i> Transaksi</a>
-      </li>
-      <li>
         <?php 
           $className = explode('/', $_SERVER['REQUEST_URI']);
           $className = end($className);
         ?>
+
+    <ul class="list-unstyled components">
+      <?php if ($className == 'main'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
+        <a href="<?= base_url('main'); ?>"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
+      </li>
+      <?php if ($className == 'transaksi'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
+          <a href="<?= base_url('transaksi'); ?>"><i class="fas fa-fw fa-handshake"></i> Transaksi</a>
+        </li>
+      <li>
         <?php if ($className == 'outlet' || $className == 'user' || $className == 'menu'): ?>
           <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle"><i class="fas fa-fw fa-align-left"></i> Management Data</a>
           <ul class="collapse list-unstyled show" id="homeSubmenu">
@@ -35,7 +43,11 @@
           </li>
         </ul>
       </li>
-      <li>
+      <?php if ($className == 'log'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
         <a href="<?= base_url('log'); ?>"><i class="fas fa-fw fa-file-signature"></i> Log</a>
       </li>
       <li>
