@@ -14,17 +14,17 @@ class Transaksi_model extends CI_Model
 		$this->db->join('tb_menu', 'tb_menu.id_menu=tb_transaksi.id_menu', 'left');
 		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_transaksi.id_outlet', 'left');
 		$this->db->join('tb_user', 'tb_user.id_user=tb_transaksi.id_user', 'left');
-		$this->db->order_by('id_transaksi', 'desc'); // jangan diubah
+		$this->db->order_by('id_transaksi', 'desc'); 
 		$this->db->group_by('kode_invoice');
 		return $this->db->get_where('tb_transaksi', ['tb_transaksi.id_outlet' => $id_outlet])->result_array();
 	}
 
-	private function getTransaksiByKodeInvoice($kode_invoice)
+	public function getTransaksiByKodeInvoice($kode_invoice)
 	{
 		$this->db->join('tb_menu', 'tb_menu.id_menu=tb_transaksi.id_menu', 'left');
 		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_transaksi.id_outlet', 'left');
 		$this->db->join('tb_user', 'tb_user.id_user=tb_transaksi.id_user', 'left');
-		$this->db->order_by('id_transaksi', 'desc'); // jangan diubah
+		$this->db->order_by('id_transaksi', 'desc'); 
 		return $this->db->get_where('tb_transaksi', ['tb_transaksi.kode_invoice' => $kode_invoice])->result_array();
 	}
 
@@ -80,6 +80,7 @@ class Transaksi_model extends CI_Model
 		$kode_invoice = $this->kodeInvoice($tanggal_transaksi, $id_outlet, $id_user, 'id_transaksi', 'T');
     	$kuantitas = $this->input->post('kuantitas', true);
     	$id_menu = $this->input->post('id_menu', true);
+    	$keterangan = $this->input->post('keterangan', true);
     	$data = [];
 
 	    $index = 0;
@@ -89,6 +90,7 @@ class Transaksi_model extends CI_Model
 				'kuantitas' => $kuantitas[$index],
 				'status_bayar' => 'belum_dibayar',
 				'tgl_transaksi' => $tanggal_transaksi,
+				'keterangan' => $keterangan,
 				'id_menu' => $id_menu[$index],
 				'id_user' => $id_user,
 				'id_outlet' => $id_outlet
@@ -97,8 +99,8 @@ class Transaksi_model extends CI_Model
 		}
 
 		$this->db->insert_batch('tb_transaksi', $data);
-		$this->session->set_flashdata('message-success', 'Transaksi baru dengan kode invoice ' . $data['kode_invoice'] . ' berhasil ditambahkan');
-		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $data['kode_invoice'] . '</b> berhasil ditambahkan', $this->mm->dataUser()['id_user']);
+		$this->session->set_flashdata('message-success', 'Transaksi baru dengan kode invoice ' . $kode_invoice . ' berhasil ditambahkan');
+		$this->lm->addLog('Transaksi baru dengan kode invoice <b>' . $kode_invoice . '</b> berhasil ditambahkan', $this->mm->dataUser()['id_user']);
 		redirect('transaksi');
 	}
 
@@ -109,6 +111,7 @@ class Transaksi_model extends CI_Model
 		$id_outlet = $this->mm->dataUser()['id_outlet'];
     	$kuantitas = $this->input->post('kuantitas', true);
     	$id_menu = $this->input->post('id_menu', true);
+    	$keterangan = $this->input->post('keterangan', true);
     	$data = [];
     	
     	$kode_invoice_baru = $kode_invoice; 
@@ -121,6 +124,7 @@ class Transaksi_model extends CI_Model
 				'kuantitas' => $kuantitas[$index],
 				'status_bayar' => 'belum_dibayar',
 				'tgl_transaksi' => $tanggal_transaksi,
+				'keterangan' => $keterangan,
 				'id_menu' => $id_menu[$index],
 				'id_user' => $id_user,
 				'id_outlet' => $id_outlet

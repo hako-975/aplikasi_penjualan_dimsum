@@ -262,3 +262,8 @@ a.article:hover {
         margin: .5rem 0;
     }   
 }
+
+textarea {
+    min-height: 90px;
+    max-height: 120px;
+}

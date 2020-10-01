@@ -38,6 +38,11 @@
 		      			<div class="col-xs-1"> : </div>
 		      			<div class="col text-break"><?= $dataUser['jabatan']; ?></div>
 		       		</div>
+		       		<div class="row">
+		      			<div class="col-md-5">Pada Outlet</div>
+		      			<div class="col-xs-1"> : </div>
+		      			<div class="col text-break"><?= $dataUser['nama_outlet']; ?></div>
+		       		</div>
 		       		<div class="row mt-2">
 		       			<div class="col">
 		       				<a target="_blank" href="<?= base_url('prints/profile/') . $dataUser['id_user']; ?>" class="btn btn-success"><i class="fas fa-fw fa-print"></i></a>

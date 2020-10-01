@@ -22,8 +22,15 @@
       <?php else: ?>
         <li>
       <?php endif ?>
-          <a href="<?= base_url('transaksi'); ?>"><i class="fas fa-fw fa-handshake"></i> Transaksi</a>
-        </li>
+        <a href="<?= base_url('transaksi'); ?>"><i class="fas fa-fw fa-handshake"></i> Transaksi</a>
+      </li>
+      <?php if ($className == 'pembayaran'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
+        <a href="<?= base_url('pembayaran'); ?>"><i class="fas fa-fw fa-dollar-sign"></i> Pembayaran</a>
+      </li>
       <li>
         <?php if ($className == 'outlet' || $className == 'user' || $className == 'menu'): ?>
           <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle"><i class="fas fa-fw fa-align-left"></i> Management Data</a>

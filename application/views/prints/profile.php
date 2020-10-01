@@ -35,6 +35,11 @@
 		      			<div class="col-xs-1"> : </div>
 		      			<div class="col text-break"><?= $userProfile['jabatan']; ?></div>
 		       		</div>
+		       		<div class="row">
+		      			<div class="col-md-4 ml-5">Pada Outlet</div>
+		      			<div class="col-xs-1"> : </div>
+		      			<div class="col text-break"><?= $userProfile['nama_outlet']; ?></div>
+		       		</div>
 			      </div>
 			    </div>
 			  </div>

@@ -19,6 +19,7 @@ class User_model extends CI_Model
 
 	public function getUserById($id)
 	{
+		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_user.id_outlet');
 		return $this->db->get_where('tb_user', ['id_user' => $id])->row_array();
 	}
 
