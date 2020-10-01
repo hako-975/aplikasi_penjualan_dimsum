@@ -36,6 +36,30 @@ class Prints extends CI_Controller
 		$this->load->view('prints/pembayaran', $data);
 		$this->load->view('templates/footer', $data);
 	}
+
+	public function laporan($tanggal_awal, $tanggal_akhir, $status_bayar)
+	{
+		$this->lm->addLog('Print Laporan dari tanggal' . $tanggal_awal . ' sampai ' . $tanggal_akhir . ', status bayar : ' . $status_bayar, $this->mm->dataUser()['id_user']);
+		$data['title'] = 'Print Laporan - ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . ', status bayar : ' . $status_bayar;
+		$data['transaksi'] = $this->tm->getTransaksiTgl(strtotime(date('Y-m-01 00:00:01')), strtotime(date('Y-m-d 23:59:58')));
+
+		if ($status_bayar == 'semua') {
+			$data['transaksi'] = $this->tm->getTransaksiTgl(strtotime(date('Y-m-01 00:00:01')), strtotime(date('Y-m-d 23:59:58')));
+		} else {
+			$data['transaksi'] = $this->tm->getTransaksiTglStatusBayar(strtotime(date('Y-m-01 00:00:01')), strtotime(date('Y-m-d 23:59:58')), $status_bayar);
+		}
+
+		// kirim data tanggal untuk riwayat penelusuran
+		$data['tanggal_awal'] = $this->input->post('tanggal_awal');
+		$data['tanggal_akhir'] = $this->input->post('tanggal_akhir');
+			$data['status_bayar'] = $status_bayar;
+		$data['tanggal_awal'] = $tanggal_awal;
+		$data['tanggal_akhir'] = $tanggal_akhir;
+		$data['status_bayar'] = $status_bayar;
+		$this->load->view('templates/header', $data);
+		$this->load->view('prints/laporan', $data);
+		$this->load->view('templates/footer', $data);
+	}
 }
 
  ?>

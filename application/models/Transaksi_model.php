@@ -164,6 +164,7 @@ class Transaksi_model extends CI_Model
 		$query = "SELECT * FROM tb_transaksi 
 			LEFT JOIN tb_user ON tb_transaksi.id_user = tb_user.id_user
 			LEFT JOIN tb_outlet ON tb_transaksi.id_outlet = tb_outlet.id_outlet
+			LEFT JOIN tb_pembayaran ON tb_pembayaran.kode_invoice = tb_transaksi.kode_invoice
 			WHERE tb_transaksi.tgl_transaksi BETWEEN '$tanggal_awal' AND '$tanggal_akhir' AND tb_transaksi.status_bayar = '$status_bayar'
 			GROUP BY tb_transaksi.kode_invoice
 			ORDER BY tb_transaksi.id_transaksi DESC

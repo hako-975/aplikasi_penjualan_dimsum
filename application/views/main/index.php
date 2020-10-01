@@ -71,7 +71,9 @@
 	                <button class="btn btn-success mx-1" name="cari_tanggal" type="submit"><i class="fas fa-fw fa-filter"></i> Filter</button>
 	                <a class="btn btn-success m-1" href="<?= base_url('main'); ?>"><i class="fas fa-fw fa-redo"></i></a>
 					<?php if (isset($_POST['cari_tanggal'])): ?>
-		                <a class="btn btn-success mx-1" href="<?= base_url('prints/laporan/'); ?>"><i class="fas fa-fw fa-print"></i> Print</a>
+						<?php if ($status_bayar == 'sudah_dibayar'): ?>
+			                <a class="btn btn-success mx-1" href="<?= base_url('prints/laporan/' . $tanggal_awal . '/' . $tanggal_akhir . '/' . $status_bayar); ?>"><i class="fas fa-fw fa-print"></i> Print</a>
+						<?php endif ?>
 					<?php endif ?>
 	              </div>
 	            </div>
