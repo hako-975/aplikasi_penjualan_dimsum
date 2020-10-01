@@ -146,4 +146,28 @@ class Transaksi_model extends CI_Model
 		$this->lm->addLog('Transaksi dengan kode invoice <b>' . $kode_invoice . '</b> berhasil dihapus', $this->mm->dataUser()['id_user']);
 		redirect('transaksi');
 	}
+
+	public function getTransaksiTgl($tanggal_awal, $tanggal_akhir)
+	{
+		$query = "SELECT * FROM tb_transaksi 
+			LEFT JOIN tb_user ON tb_transaksi.id_user = tb_user.id_user
+			LEFT JOIN tb_outlet ON tb_transaksi.id_outlet = tb_outlet.id_outlet
+			WHERE tb_transaksi.tgl_transaksi BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
+			GROUP BY tb_transaksi.kode_invoice
+			ORDER BY tb_transaksi.id_transaksi DESC
+		";
+		return $this->db->query($query)->result_array();
+	}
+
+	public function getTransaksiTglStatusBayar($tanggal_awal, $tanggal_akhir, $status_bayar)
+	{
+		$query = "SELECT * FROM tb_transaksi 
+			LEFT JOIN tb_user ON tb_transaksi.id_user = tb_user.id_user
+			LEFT JOIN tb_outlet ON tb_transaksi.id_outlet = tb_outlet.id_outlet
+			WHERE tb_transaksi.tgl_transaksi BETWEEN '$tanggal_awal' AND '$tanggal_akhir' AND tb_transaksi.status_bayar = '$status_bayar'
+			GROUP BY tb_transaksi.kode_invoice
+			ORDER BY tb_transaksi.id_transaksi DESC
+		";
+		return $this->db->query($query)->result_array();
+	}
 }

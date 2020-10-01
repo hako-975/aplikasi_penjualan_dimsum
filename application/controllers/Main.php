@@ -8,6 +8,8 @@ class Main extends CI_Controller
 		parent::__construct();
 		$this->load->model('Main_model', 'mm');
 		$this->load->model('User_model', 'um');
+		$this->load->model('Pembayaran_model', 'pm');
+		$this->load->model('Transaksi_model', 'tm');
 		$this->load->model('Outlet_model', 'om');
 		$this->load->model('Menu_model', 'memo');
 	}
@@ -17,14 +19,22 @@ class Main extends CI_Controller
 		$this->mm->check_login();
 		$data['dataUser'] = $this->mm->dataUser();
 		$data['title'] = "Halaman Dashboard";
+		$data['transaksi'] = $this->tm->getTransaksiTgl(strtotime(date('Y-m-01 00:00:01')), strtotime(date('Y-m-d 23:59:58')));
 
 		if (isset($_POST['cari_tanggal'])) {
-			$tanggal_awal = date('Y-m-d 00:00:00', strtotime($this->input->post('tanggal_awal')));
-			$tanggal_akhir = date('Y-m-d 23:59:59', strtotime($this->input->post('tanggal_akhir')));
+			$tanggal_awal = date('Y-m-d 00:00:00', strtotime($this->input->post('tanggal_awal', true)));
+			$tanggal_akhir = date('Y-m-d 23:59:59', strtotime($this->input->post('tanggal_akhir', true)));
+			$status_bayar = $this->input->post('status_bayar', true);
+			if ($status_bayar == 'semua') {
+				$data['transaksi'] = $this->tm->getTransaksiTgl(strtotime($tanggal_awal), strtotime($tanggal_akhir));
+			} else {
+				$data['transaksi'] = $this->tm->getTransaksiTglStatusBayar(strtotime($tanggal_awal), strtotime($tanggal_akhir), $status_bayar);
+			}
 
 			// kirim data tanggal untuk riwayat penelusuran
 			$data['tanggal_awal'] = $this->input->post('tanggal_awal');
 			$data['tanggal_akhir'] = $this->input->post('tanggal_akhir');
+			$data['status_bayar'] = $status_bayar;
 		}
 
 		$this->load->view('templates/header', $data);

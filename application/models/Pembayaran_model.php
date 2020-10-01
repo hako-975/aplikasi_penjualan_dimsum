@@ -60,4 +60,28 @@ class Pembayaran_model extends CI_Model
 	{
 		return $this->db->get_where('tb_pembayaran', ['kode_invoice' => $kode_invoice])->row_array();
 	}
+
+	public function getPembayaranTglStatusBayar($tanggal_awal, $tanggal_akhir, $status_bayar)
+	{
+		$query = "SELECT *  FROM tb_pembayaran 
+			LEFT JOIN tb_user ON tb_pembayaran.id_user = tb_user.id_user
+			LEFT JOIN tb_outlet ON tb_pembayaran.id_outlet = tb_outlet.id_outlet
+			LEFT JOIN tb_transaksi ON tb_pembayaran.kode_invoice = tb_transaksi.kode_invoice
+			WHERE tb_pembayaran.tgl_pembayaran BETWEEN '$tanggal_awal' AND '$tanggal_akhir' AND tb_transaksi.status_bayar = '$status_bayar'
+			GROUP BY tb_pembayaran.kode_invoice
+		";
+		return $this->db->query($query)->result_array();
+	}
+
+	public function getPembayaranTgl($tanggal_awal, $tanggal_akhir)
+	{
+		$query = "SELECT * FROM tb_pembayaran 
+			LEFT JOIN tb_user ON tb_pembayaran.id_user = tb_user.id_user
+			LEFT JOIN tb_outlet ON tb_pembayaran.id_outlet = tb_outlet.id_outlet
+			LEFT JOIN tb_transaksi ON tb_pembayaran.kode_invoice = tb_transaksi.kode_invoice
+			WHERE tb_pembayaran.tgl_pembayaran BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
+			GROUP BY tb_pembayaran.kode_invoice
+		";
+		return $this->db->query($query)->result_array();
+	}
 }
