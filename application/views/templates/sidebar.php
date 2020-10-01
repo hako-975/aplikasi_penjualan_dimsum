@@ -50,6 +50,13 @@
           </li>
         </ul>
       </li>
+      <?php if ($className == 'laporan'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
+        <a href="<?= base_url('laporan'); ?>"><i class="fas fa-fw fa-file-pdf"></i> Laporan</a>
+      </li>
       <?php if ($className == 'log'): ?>
         <li class="active">
       <?php else: ?>
