@@ -21,7 +21,7 @@ class Main extends CI_Controller
 		$data['dataUser'] = $this->mm->dataUser();
 		$data['title'] = "Halaman Dashboard";
 		$data['pengeluaran'] = $this->pemo->getAllPengeluaran();
-		$data['transaksi'] = $this->tm->getTransaksiByIdOutletGroupByKodeInvoice($data['dataUser']['id_user']);
+		$data['transaksi'] = $this->tm->getTransaksiByIdOutletGroupByKodeInvoice($data['dataUser']['id_outlet']);
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('main/index', $data);

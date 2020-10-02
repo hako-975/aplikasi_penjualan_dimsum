@@ -4,40 +4,38 @@
 			<h3><i class="fas fa-fw fa-share-square"></i> Daftar Pengeluaran</h3>
 		</div>
 
-		<?php if ($dataUser['jabatan'] == 'administrator'): ?>
-			<div class="col-lg my-2 py-2 header-button">
-				<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahPengeluaranModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
-				<!-- Modal -->
-				<div class="modal fade" id="tambahPengeluaranModal" tabindex="-1" aria-labelledby="tambahPengeluaranModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <form action="<?= base_url('pengeluaran/addPengeluaran'); ?>" method="post">
-				    	<div class="modal-content text-left">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="tambahPengeluaranModalLabel"><i class="fas fa-fw fa-share-square"></i><sup><i class="fas fa-1x fa-plus"></i></sup> Tambah Pengeluaran</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					      	<div class="form-group">
-					      		<label for="jumlah_pengeluaran">Jumlah Pengeluaran</label>
-					      		<input type="number" id="jumlah_pengeluaran" class="form-control" placeholder="Masukkan Jumlah Pengeluaran" name="jumlah_pengeluaran" required>
-					      	</div>
-					      	<div class="form-group">
-					      		<label for="keterangan_pengeluaran">Keterangan Pengeluaran</label>
-					      		<textarea id="keterangan_pengeluaran" class="form-control" placeholder="Masukkan Keterangan Pengeluaran" name="keterangan_pengeluaran" required></textarea>
-					      	</div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Batal</button>
-					        <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-save"></i> Simpan</button>
-					      </div>
-					    </div>
-				    </form>
-				  </div>
-				</div>
+		<div class="col-lg my-2 py-2 header-button">
+			<a href="" class="btn btn-primary" data-toggle="modal" data-target="#tambahPengeluaranModal"><i class="fas fa-fw fa-plus"></i> Tambah</a>
+			<!-- Modal -->
+			<div class="modal fade" id="tambahPengeluaranModal" tabindex="-1" aria-labelledby="tambahPengeluaranModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <form action="<?= base_url('pengeluaran/addPengeluaran'); ?>" method="post">
+			    	<div class="modal-content text-left">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="tambahPengeluaranModalLabel"><i class="fas fa-fw fa-share-square"></i><sup><i class="fas fa-1x fa-plus"></i></sup> Tambah Pengeluaran</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				      	<div class="form-group">
+				      		<label for="jumlah_pengeluaran">Jumlah Pengeluaran</label>
+				      		<input type="number" id="jumlah_pengeluaran" class="form-control" placeholder="Masukkan Jumlah Pengeluaran" name="jumlah_pengeluaran" required>
+				      	</div>
+				      	<div class="form-group">
+				      		<label for="keterangan_pengeluaran">Keterangan Pengeluaran</label>
+				      		<textarea id="keterangan_pengeluaran" class="form-control" placeholder="Masukkan Keterangan Pengeluaran" name="keterangan_pengeluaran" required></textarea>
+				      	</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-fw fa-times"></i> Batal</button>
+				        <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-save"></i> Simpan</button>
+				      </div>
+				    </div>
+			    </form>
+			  </div>
 			</div>
-		<?php endif ?>
+		</div>
 	</div>
 	<div class="row my-2">
 		<div class="col-lg">

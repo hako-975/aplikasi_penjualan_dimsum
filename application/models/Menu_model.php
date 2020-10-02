@@ -28,7 +28,7 @@ class Menu_model extends CI_Model
 		$dataUser = $this->mm->dataUser();
 		if ($dataUser['jabatan'] != 'administrator') {
 			$this->session->set_flashdata('message-failed', 'Anda tidak memiliki hak akses ini, silahkan hubungi administrator!');
-			$this->lm->addLog('User dengan nama user <b>' . $dataUser['nama_user'] . '</b> mencoba <b>' . $reason . '</b>', $this->mm->dataUser()['id_menu']);
+			$this->lm->addLog('User dengan nama user <b>' . $dataUser['nama_user'] . '</b> mencoba <b>' . $reason . '</b>', $this->mm->dataUser()['id_user']);
 			redirect('main/menu');
 			return false;
 		}

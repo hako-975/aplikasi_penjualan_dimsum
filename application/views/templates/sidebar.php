@@ -42,9 +42,11 @@
           <li>
             <a href="<?= base_url('main/outlet'); ?>"><i class="fas fa-fw fa-store"></i> Outlet</a>
           </li>
-          <li>
-            <a href="<?= base_url('main/user'); ?>"><i class="fas fa-fw fa-user"></i> User</a>
-          </li>
+          <?php if ($dataUser['jabatan'] == 'administrator'): ?>
+            <li>
+              <a href="<?= base_url('main/user'); ?>"><i class="fas fa-fw fa-user"></i> User</a>
+            </li>
+          <?php endif ?>
           <li>
             <a href="<?= base_url('main/menu'); ?>"><i class="fas fa-fw fa-utensils"></i> Menu</a>
           </li>
