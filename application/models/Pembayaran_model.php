@@ -52,7 +52,8 @@ class Pembayaran_model extends CI_Model
 		$this->db->join('tb_transaksi', 'tb_transaksi.kode_invoice=tb_pembayaran.kode_invoice', 'right');
 		$this->db->join('tb_user', 'tb_user.id_user=tb_pembayaran.id_user', 'left');
 		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_pembayaran.id_outlet', 'left');
-		$this->db->group_by('tb_pembayaran.kode_invoice');
+		$this->db->group_by('tb_transaksi.kode_invoice');
+		$this->db->order_by('tb_transaksi.kode_invoice', 'desc');
 		return $this->db->get('tb_pembayaran')->result_array();
 	}
 

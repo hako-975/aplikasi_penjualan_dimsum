@@ -6,6 +6,7 @@ class Prints extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('Pengeluaran_model', 'pemo');
 		$this->load->model('Pembayaran_model', 'pm');
 		$this->load->model('Transaksi_model', 'tm');
 		$this->load->model('Main_model', 'mm');
@@ -41,13 +42,7 @@ class Prints extends CI_Controller
 	{
 		$this->lm->addLog('Print Laporan dari tanggal' . $tanggal_awal . ' sampai ' . $tanggal_akhir . ', status bayar : ' . $status_bayar, $this->mm->dataUser()['id_user']);
 		$data['title'] = 'Print Laporan - ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . ', status bayar : ' . $status_bayar;
-		$data['transaksi'] = $this->tm->getTransaksiTgl(strtotime(date('Y-m-01 00:00:01')), strtotime(date('Y-m-d 23:59:58')));
-
-		if ($status_bayar == 'semua') {
-			$data['transaksi'] = $this->tm->getTransaksiTgl(strtotime(date('Y-m-01 00:00:01')), strtotime(date('Y-m-d 23:59:58')));
-		} else {
-			$data['transaksi'] = $this->tm->getTransaksiTglStatusBayar(strtotime(date('Y-m-01 00:00:01')), strtotime(date('Y-m-d 23:59:58')), $status_bayar);
-		}
+		$data['transaksi'] = $this->tm->getTransaksiTglStatusBayar(strtotime(date($tanggal_awal . ' 00:00:01')), strtotime(date($tanggal_akhir . ' 23:59:58')), $status_bayar);
 
 		// kirim data tanggal untuk riwayat penelusuran
 		$data['tanggal_awal'] = $this->input->post('tanggal_awal');
@@ -58,6 +53,22 @@ class Prints extends CI_Controller
 		$data['status_bayar'] = $status_bayar;
 		$this->load->view('templates/header', $data);
 		$this->load->view('prints/laporan', $data);
+		$this->load->view('templates/footer', $data);
+	}
+
+	public function laporanPengeluaran($tanggal_awal, $tanggal_akhir)
+	{
+		$this->lm->addLog('Print Laporan Pengeluaran dari tanggal' . $tanggal_awal . ' sampai ' . $tanggal_akhir, $this->mm->dataUser()['id_user']);
+		$data['title'] = 'Print Laporan Pengeluaran - ' . $tanggal_awal . ' sampai ' . $tanggal_akhir;
+		$data['pengeluaran'] = $this->pemo->getPengeluaranTgl(strtotime(date($tanggal_awal . ' 00:00:01')), strtotime(date($tanggal_akhir . ' 23:59:58')));
+
+		// kirim data tanggal untuk riwayat penelusuran
+		$data['tanggal_awal'] = $this->input->post('tanggal_awal');
+		$data['tanggal_akhir'] = $this->input->post('tanggal_akhir');
+		$data['tanggal_awal'] = $tanggal_awal;
+		$data['tanggal_akhir'] = $tanggal_akhir;
+		$this->load->view('templates/header', $data);
+		$this->load->view('prints/laporanPengeluaran', $data);
 		$this->load->view('templates/footer', $data);
 	}
 }

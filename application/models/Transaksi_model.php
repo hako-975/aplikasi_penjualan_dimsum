@@ -68,7 +68,7 @@ class Transaksi_model extends CI_Model
 		$inc = $conv + 1;
 		
 		// membuat kode otomatis cth: 009, 010, 011 dan hasil akhir
-		$result_code = $just_date . str_pad($id_outlet, 3, "0", STR_PAD_LEFT) . str_pad($id_user, 3, "0", STR_PAD_LEFT)  . $initial . str_pad($inc, 4, "0", STR_PAD_LEFT);
+		$result_code = $just_date . str_pad($id_outlet, 2, "0", STR_PAD_LEFT) . str_pad($id_user, 2, "0", STR_PAD_LEFT)  . $initial . str_pad($inc, 4, "0", STR_PAD_LEFT);
 		return $result_code;
 	}
 

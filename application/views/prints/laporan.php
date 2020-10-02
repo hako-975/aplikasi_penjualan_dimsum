@@ -11,7 +11,7 @@
 	}
 </style>
 <a onclick="window.print();" class="no_print btn btn-success"><i class="fas fa-fw fa-print"></i></a> <br><br>
-<a href="<?= base_url('main'); ?>" class="no_print btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i></a>
+<a href="<?= base_url('laporan'); ?>" class="no_print btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i></a>
 <div class="container my-3">
 	<div class="row">
 		<div class="col">

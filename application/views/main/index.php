@@ -5,82 +5,61 @@
 		</div>
 	</div>
 	<div class="row my-2">
-		<div class="col-lg-12">
-	        <form method="post" action="<?= base_url('main'); ?>" class="form-inline bg-danger p-3 rounded text-white">
-	          <div class="row mx-auto justify-content-center">
-	            <div class="col-lg text-center ml-2 p-1">
-					<?php if (isset($_POST['cari_tanggal'])): ?>
-						<?php 
-							$tanggal_awal_heading = date('d-m-Y', strtotime($tanggal_awal));
-							$tanggal_akhir_heading = date('d-m-Y', strtotime($tanggal_akhir));
-						 ?>
-						<h5>Dari Tanggal <?= $tanggal_awal_heading; ?> Sampai Tanggal <?= $tanggal_akhir_heading; ?>, Status Bayar : 
-						<?php if ($status_bayar == 'belum_dibayar'): ?>
-							<span>Belum Dibayar</span>
-						<?php else: ?>
-							<span>Sudah Dibayar</span>
-						<?php endif ?></h5>
-					<?php else: ?>
-						<h5>Dari Tanggal <?= date('01-m-Y'); ?> Sampai Tanggal <?= date('d-m-Y'); ?></h5>
-					<?php endif ?>
-	            </div>
-	          </div>
-	          <div class="row justify-content-center text-center">
-	            <div class="col-lg">
-	              <div class="form-group my-1">
-	                <label class="mx-2">Dari tanggal : </label>
-	                <?php if (isset($_POST['cari_tanggal'])): ?>
-	                  <input type="date" name="tanggal_awal" class="form-control" value="<?= $tanggal_awal; ?>">
-	                <?php else: ?>
-	                  <input type="date" name="tanggal_awal" class="form-control" value="<?= date('Y-m-01'); ?>">
-	                <?php endif ?>
-	              </div>
-	            </div>
-	            <div class="col-lg">
-	              <div class="form-group my-1">
-	                <label class="mx-2">Sampai tanggal : </label>
-	                <?php if (isset($_POST['cari_tanggal'])): ?>
-	                  <input type="date" name="tanggal_akhir" class="form-control" value="<?= $tanggal_akhir; ?>">
-	                <?php else: ?>
-	                  <input type="date" name="tanggal_akhir" class="form-control" value="<?= date('Y-m-d'); ?>">
-	                <?php endif ?>
-	              </div>
-	            </div>
-	            <div class="col-lg">
-	            	<div class="form-group my-1">
-	            		<label for="status_bayar">Status Bayar</label>
-	            		<select id="status_bayar" class="form-control" name="status_bayar">
-	            			<?php if ($status_bayar == 'belum_dibayar'): ?>
-		            			<option value="belum_dibayar">Belum Dibayar</option>
-		            			<option value="sudah_dibayar">Sudah Dibayar</option>
-            					<option value="semua">Semua</option>
-	            			<?php elseif ($status_bayar == 'sudah_dibayar'): ?>
-		            			<option value="sudah_dibayar">Sudah Dibayar</option>
-	            				<option value="belum_dibayar">Belum Dibayar</option>
-            					<option value="semua">Semua</option>
-            				<?php else: ?>
-            					<option value="semua">Semua</option>
-	            				<option value="belum_dibayar">Belum Dibayar</option>
-		            			<option value="sudah_dibayar">Sudah Dibayar</option>
-	            			<?php endif ?>
-	            		</select>
-	            	</div>
-	            </div>
-	            <div class="col-lg mt-4">
-	              <div class="form-group my-1">
-	                <button class="btn btn-success mx-1" name="cari_tanggal" type="submit"><i class="fas fa-fw fa-filter"></i> Filter</button>
-	                <a class="btn btn-success m-1" href="<?= base_url('main'); ?>"><i class="fas fa-fw fa-redo"></i></a>
-					<?php if (isset($_POST['cari_tanggal'])): ?>
-						<?php if ($status_bayar == 'sudah_dibayar'): ?>
-			                <a class="btn btn-success mx-1" href="<?= base_url('prints/laporan/' . $tanggal_awal . '/' . $tanggal_akhir . '/' . $status_bayar); ?>"><i class="fas fa-fw fa-print"></i> Print</a>
-						<?php endif ?>
-					<?php endif ?>
-	              </div>
-	            </div>
-	          </div>
-	        </form>
-	    </div>
+		<div class="col-lg-3">
+			<div class="card shadow">
+			  <div class="card-body">
+			    <h6><i class="fas fa-fw fa-handshake"></i> <br>Transaksi</h6>
+			    <?php 
+			    	$this->db->group_by('kode_invoice');
+			    	$jml_transaksi = $this->db->get('tb_transaksi')->num_rows();
+			    ?>
+			    <h6 class="text-muted"><?= number_format($jml_transaksi); ?> Transaksi</h6>
+			  </div>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="card shadow">
+			  <div class="card-body">
+			    <h6><i class="text-success fas fa-fw fa-caret-up"></i> <i class="text-success fas fa-fw fa-dollar-sign"></i> <br>Omset</h6>
+			    <?php 
+				    $pembayaran = $this->pm->getAllPembayaran();
+			    	$omset = 0;
+			    	foreach ($pembayaran as $dp) {
+			    		if ($dp['status_bayar'] == 'sudah_dibayar') {
+				    		$omset += $this->pm->totalHargaTerakhir($dp['kode_invoice'])['total_harga_terakhir'];
+			    		} else {
+			    			$omset += 0;
+			    		}
+			    	}
+			    ?>
+			    <h6 class="text-muted">Rp. <?= number_format($omset); ?></h6>
+			  </div>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="card shadow">
+				<div class="card-body">
+					<h6><i class="text-danger fas fa-fw fa-caret-down"></i><i class="text-danger fas fa-fw fa-dollar-sign"></i> <br>Pengeluaran</h6>
+					<?php 
+				    	$jumlah_pengeluaran = 0;
+				    	foreach ($pengeluaran as $dpe) {
+				    		$jumlah_pengeluaran += $dpe['jumlah_pengeluaran'];
+				    	}
+				    ?>
+					<h6 class="text-muted">Rp. <?= number_format($jumlah_pengeluaran); ?></h6>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="card shadow">
+				<div class="card-body">
+					<h6><i class="fas fa-fw fa-wallet"></i> <br>Total Keuangan</h6>
+					<h6 class="text-muted">Rp. <?= number_format($omset - $jumlah_pengeluaran); ?></h6>
+				</div>
+			</div>
+		</div>
 	</div>
+
 	<div class="row my-2 mt-3">
 		<div class="col">
 			<div class="table-responsive">

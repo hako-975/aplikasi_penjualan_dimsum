@@ -50,6 +50,13 @@
           </li>
         </ul>
       </li>
+      <?php if ($className == 'pengeluaran'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
+        <a href="<?= base_url('pengeluaran'); ?>"><i class="fas fa-fw fa-share-square"></i> Pengeluaran</a>
+      </li>
       <?php if ($className == 'laporan'): ?>
         <li class="active">
       <?php else: ?>
@@ -57,12 +64,26 @@
       <?php endif ?>
         <a href="<?= base_url('laporan'); ?>"><i class="fas fa-fw fa-file-pdf"></i> Laporan</a>
       </li>
+      <?php if ($className == 'laporanPengeluaran'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
+        <a href="<?= base_url('laporanPengeluaran'); ?>"><i class="fas fa-fw fa-file-pdf"></i> Laporan Pengeluaran</a>
+      </li>
       <?php if ($className == 'log'): ?>
         <li class="active">
       <?php else: ?>
         <li>
       <?php endif ?>
         <a href="<?= base_url('log'); ?>"><i class="fas fa-fw fa-file-signature"></i> Log</a>
+      </li>
+      <?php if ($className == 'logPengeluaran'): ?>
+        <li class="active">
+      <?php else: ?>
+        <li>
+      <?php endif ?>
+        <a href="<?= base_url('logPengeluaran'); ?>"><i class="fas fa-fw fa-file-signature"></i> Log Pengeluaran</a>
       </li>
       <li>
         <a href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-fw fa-sign-out-alt"></i> Logout</a>

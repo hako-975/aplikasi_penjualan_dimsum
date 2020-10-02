@@ -21,16 +21,16 @@
 		<div class="col-5">
 			<h3 class="text-center">*** AT DYMSUM AWW ***</h3>
 			<div id="header" class="mt-3">
-				<span>JL. PERMAI RAYA SH12/4 PAMULANG TANGSEL BANTEN</span>
+				<span>JL. AMD BABAKAN POCIS 11 SETU TANGSEL BANTEN</span>
 				<div class="row mb-0">
-					<div class="col-3">
-						<span>Telp : 0878-0867-5313</span>
+					<div class="col-5">
+						<span>Telp : 0882-1162-3915</span>
 					</div>
-					<div class="col-3">
-						<span>Fax : 021-756-4717</span>
+					<div class="col-5">
+						<span>Fax : -</span>
 					</div>
 				</div>
-				<span>www.atawdymsumaww.com</span>
+				<!-- <span>www.atawdymsumaww.com</span> -->
 			</div>
 			<div id="sub_header">
 				<div class="row mt-3">
@@ -119,7 +119,8 @@
 				<div class="row mt-4">
 					<div class="col-8">
 						<span>
-							PERIKSA KEMBALI BELANJAAN / NOTA SEBELUM MENINGGALKAN TOKO
+							TERIMA KASIH SUDAH MEMESAN <br>
+							SELAMAT MENIKMATI
 						</span>
 					</div>
 				</div>
