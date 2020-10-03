@@ -8,7 +8,6 @@ class LaporanPengeluaran extends CI_Controller {
 		$this->load->model('Log_model', 'lm');
 		$this->load->model('Main_model', 'mm');
 		$this->load->model('Pembayaran_model', 'pm');
-		$this->load->model('Laporan_model', 'lamo');
 		$this->load->model('Pengeluaran_model', 'pemo');
 	}
 	public function index()

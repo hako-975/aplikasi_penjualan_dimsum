@@ -63,6 +63,7 @@
 	<div class="row my-2 mt-3">
 		<div class="col">
 			<div class="table-responsive">
+				<h4>Daftar Terakhir Transaksi</h4>
 				<table class="table table-hover table-striped table-bordered" id="#table_id">
 					<thead>
 						<tr>

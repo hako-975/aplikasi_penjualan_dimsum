@@ -22,11 +22,10 @@ class Transaksi_model extends CI_Model
 	public function getTransaksiByKodeInvoice($kode_invoice)
 	{
 		$queryKuantitas = "
-			SELECT 
-				tb_transaksi.kode_invoice, tb_transaksi.status_bayar, tb_transaksi.tgl_transaksi,
-				tb_transaksi.keterangan, tb_transaksi.id_menu, tb_transaksi.id_user, tb_transaksi.id_outlet, tb_menu.nama_menu, 
-				tb_menu.harga_menu, tb_transaksi.keterangan , sum(tb_transaksi.kuantitas) as jmlKuantitasMenuSama
+			SELECT *, sum(tb_transaksi.kuantitas) as jmlKuantitasMenuSama
 			FROM tb_transaksi 
+			LEFT JOIN tb_outlet ON tb_transaksi.id_outlet = tb_outlet.id_outlet
+			LEFT JOIN tb_user ON tb_transaksi.id_user = tb_user.id_user
 			LEFT JOIN tb_menu ON tb_transaksi.id_menu = tb_menu.id_menu
 			WHERE tb_transaksi.kode_invoice = '$kode_invoice' 
 			GROUP BY tb_transaksi.id_menu

@@ -8,7 +8,6 @@ class Laporan extends CI_Controller {
 		$this->load->model('Log_model', 'lm');
 		$this->load->model('Main_model', 'mm');
 		$this->load->model('Pembayaran_model', 'pm');
-		$this->load->model('Laporan_model', 'lamo');
 		$this->load->model('Transaksi_model', 'tm');
 	}
 	public function index()

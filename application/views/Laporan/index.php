@@ -17,8 +17,10 @@
 						<h5>Dari Tanggal <?= $tanggal_awal_heading; ?> Sampai Tanggal <?= $tanggal_akhir_heading; ?>, Status Bayar : 
 						<?php if ($status_bayar == 'belum_dibayar'): ?>
 							<span>Belum Dibayar</span>
-						<?php else: ?>
+						<?php elseif ($status_bayar == 'sudah_dibayar'): ?>
 							<span>Sudah Dibayar</span>
+						<?php else: ?>
+							<span>Semua</span>
 						<?php endif ?></h5>
 					<?php else: ?>
 						<h5>Dari Tanggal <?= date('01-m-Y'); ?> Sampai Tanggal <?= date('d-m-Y'); ?></h5>
