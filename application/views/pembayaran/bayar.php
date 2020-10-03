@@ -4,7 +4,7 @@
 	    	<div class="modal-content">
 		      	<div class="modal-header">
     				<h5 class="modal-title"><i class="fas fa-fw fa-dollar-sign"></i> Pembayaran Transaksi</h5>
-    				<a href="<?= base_url('transaksi'); ?>" class="btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i> Kembali</a>
+    				<a href="<?= base_url('pembayaran'); ?>" class="btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i> Kembali</a>
 		      	</div>
 	      		<div class="modal-body">
         			<div class="row justify-content-between">
@@ -40,9 +40,9 @@
 				        				<tr>
 				        					<td><?= $i++; ?></td>
 				        					<td><?= $dimi['nama_menu']; ?></td>
-				        					<td><?= $dimi['kuantitas']; ?></td>
+				        					<td><?= $dimi['jmlKuantitasMenuSama']; ?></td>
 				        					<td><?= number_format($dimi['harga_menu']); ?></td>
-				        					<td><?= number_format($dimi['kuantitas'] * $dimi['harga_menu']); ?></td>
+				        					<td><?= number_format($dimi['jmlKuantitasMenuSama'] * $dimi['harga_menu']); ?></td>
 				        				</tr>
 				        			<?php endforeach ?>
 

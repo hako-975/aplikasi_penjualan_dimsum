@@ -99,19 +99,22 @@
 							<td class="py-0 my-0">
 								<?php 
 									$kode_invoice = $dt['kode_invoice'];
-									$query = "SELECT * FROM tb_transaksi 
-									LEFT JOIN tb_menu ON tb_transaksi.id_menu = tb_menu.id_menu
-									LEFT JOIN tb_outlet ON tb_transaksi.id_outlet = tb_outlet.id_outlet
-									LEFT JOIN tb_user ON tb_transaksi.id_user = tb_user.id_user
-									WHERE tb_transaksi.kode_invoice = '$kode_invoice'
+									$queryKuantitas = "
+										SELECT 
+											tb_menu.nama_menu, tb_transaksi.keterangan , sum(tb_transaksi.kuantitas) as jmlKuantitasMenuSama
+										FROM tb_transaksi 
+										LEFT JOIN tb_menu ON tb_transaksi.id_menu = tb_menu.id_menu
+										WHERE tb_transaksi.kode_invoice = '$kode_invoice' 
+										GROUP BY tb_transaksi.id_menu
 									";
-									$execute = $this->db->query($query)->result_array();
+									
+									$executeKuantitasMenuSama = $this->db->query($queryKuantitas)->result_array();
 								?>
 								<div class="row pesanan py-0 mx-0 my-0 px-2 text-left">
-									<?php foreach ($execute as $pesanan): ?>
+									<?php foreach ($executeKuantitasMenuSama as $pesanan): ?>
 									  	<hr style="margin: 5px 0; background: #eaeaea; width: 100%">
 									  	<div class="col-10 text-left"><?= $pesanan['nama_menu']; ?></div>
-									  	<div class="col-2 text-center bg-info text-white rounded"><?= $pesanan['kuantitas']; ?></div>
+									  	<div class="col-2 text-center bg-info text-white rounded"><?= $pesanan['jmlKuantitasMenuSama']; ?></div>
 									<?php endforeach ?>
 								  	<hr style="margin: 5px 0; background: #eaeaea; width: 100%">
 								  	<p class="text-dark border border-dark rounded px-2">

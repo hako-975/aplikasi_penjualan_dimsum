@@ -21,11 +21,18 @@ class Transaksi_model extends CI_Model
 
 	public function getTransaksiByKodeInvoice($kode_invoice)
 	{
-		$this->db->join('tb_menu', 'tb_menu.id_menu=tb_transaksi.id_menu', 'left');
-		$this->db->join('tb_outlet', 'tb_outlet.id_outlet=tb_transaksi.id_outlet', 'left');
-		$this->db->join('tb_user', 'tb_user.id_user=tb_transaksi.id_user', 'left');
-		$this->db->order_by('id_transaksi', 'desc'); 
-		return $this->db->get_where('tb_transaksi', ['tb_transaksi.kode_invoice' => $kode_invoice])->result_array();
+		$queryKuantitas = "
+			SELECT 
+				tb_transaksi.kode_invoice, tb_transaksi.status_bayar, tb_transaksi.tgl_transaksi,
+				tb_transaksi.keterangan, tb_transaksi.id_menu, tb_transaksi.id_user, tb_transaksi.id_outlet, tb_menu.nama_menu, 
+				tb_menu.harga_menu, tb_transaksi.keterangan , sum(tb_transaksi.kuantitas) as jmlKuantitasMenuSama
+			FROM tb_transaksi 
+			LEFT JOIN tb_menu ON tb_transaksi.id_menu = tb_menu.id_menu
+			WHERE tb_transaksi.kode_invoice = '$kode_invoice' 
+			GROUP BY tb_transaksi.id_menu
+		";
+		
+		return $this->db->query($queryKuantitas)->result_array();
 	}
 
 	public function getTransaksiById($id)
