@@ -62,18 +62,35 @@
 			        		<p class="form-control">
 			        			Rp. <?= number_format($total_harga_terakhir['total_harga_terakhir']); ?>
 			        		</p>
-			        		<?php if (isset($_SESSION['kembalian'])): ?>
+			        		<?php if ($this->session->flashdata('pembayaran-berhasil')): ?>
 			        			<div class="form-group">
 			        				<label for="jml_uang_dibayar" class="font-weight-bold">Uang yang dibayar</label>
 			        				<p class="form-control">
-					        			Rp. <?= number_format($_SESSION['jml_uang_dibayar']); ?>
+					        			Rp. <?= number_format($isi_pembayaran['jml_uang_dibayar']); ?>
 					        		</p>
 			        			</div>
 			        			<hr class="mb-2">
 			        			<div class="form-group">
 			        				<label for="kembalian" class="font-weight-bold">Kembalian</label>
 			        				<p class="form-control">
-					        			Rp. <?= number_format($_SESSION['kembalian']); ?>
+					        			Rp. <?= number_format($isi_pembayaran['kembalian']); ?>
+					        		</p>
+			        			</div>
+			        			<div class="form-group text-right">
+				        			<a class="btn btn-success" href="<?= base_url('prints/pembayaran/') . $kode_invoice; ?>"><i class="fas fa-fw fa-print"></i> Cetak Invoice</a>
+			        			</div>
+		        			<?php elseif (isset($isi_pembayaran)) : ?>
+		        				<div class="form-group">
+			        				<label for="jml_uang_dibayar" class="font-weight-bold">Uang yang dibayar</label>
+			        				<p class="form-control">
+					        			Rp. <?= number_format($isi_pembayaran['jml_uang_dibayar']); ?>
+					        		</p>
+			        			</div>
+			        			<hr class="mb-2">
+			        			<div class="form-group">
+			        				<label for="kembalian" class="font-weight-bold">Kembalian</label>
+			        				<p class="form-control">
+					        			Rp. <?= number_format($isi_pembayaran['kembalian']); ?>
 					        		</p>
 			        			</div>
 			        			<div class="form-group text-right">
@@ -81,6 +98,7 @@
 			        			</div>
 		        			<?php else: ?>
 		        				<form method="post" action="<?= base_url('pembayaran/bayar/' . $kode_invoice); ?>">
+		        					<input type="hidden" name="sudahMelakukanPembayaran" value="1">
 				        			<div class="form-group">
 				        				<input type="hidden" name="total_pembayaran" value="<?= $total_harga_terakhir['total_harga_terakhir']; ?>">
 				        				<label for="jml_uang_dibayar" class="font-weight-bold">Uang yang dibayar</label>

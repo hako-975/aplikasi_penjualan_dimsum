@@ -43,7 +43,8 @@ class Pembayaran_model extends CI_Model
 		}
 		$this->session->set_flashdata('message-success', 'Pembayaran baru dengan kode invoice ' . $data['kode_invoice'] . ' berhasil ditambahkan');
 		$this->lm->addLog('Pembayaran baru dengan kode invoice <b>' . $data['kode_invoice'] . '</b> berhasil ditambahkan', $this->mm->dataUser()['id_user']);
-		$this->session->set_userdata(['kembalian' => $kembalian, 'jml_uang_dibayar' => $jml_uang_dibayar]);
+		/*$this->session->set_userdata(['kembalian' => $kembalian, 'jml_uang_dibayar' => $jml_uang_dibayar]);*/
+		$this->session->set_flashdata('pembayaran-berhasil', 'pembayaran-berhasil');
 		redirect('pembayaran/bayar/' . $kode_invoice);
 	}
 

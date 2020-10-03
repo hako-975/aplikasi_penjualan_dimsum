@@ -35,6 +35,7 @@ class Pembayaran extends CI_Controller
 		$data['kode_invoice'] = $kode_invoice;
 		$data['total_harga_terakhir'] = $this->pm->totalHargaTerakhir($kode_invoice);
 		$data['isi_menu_invoice'] = $this->tm->getTransaksiByKodeInvoice($kode_invoice);
+		$data['isi_pembayaran'] = $this->pm->getPembayaranBykodeInvoice($kode_invoice);
 		$data['title'] = "Halaman Pembayaran - " . $kode_invoice;
 		$this->form_validation->set_rules('jml_uang_dibayar', 'Jumlah uang dibayar', 'required|trim');
 		if ($this->form_validation->run() == false) {
